@@ -1,4 +1,4 @@
-.navbar-lewagon {
+encrypted_password.navbar-lewagon {
   justify-content: space-between;
   background: white;
 }
@@ -9,4 +9,20 @@
 
 .navbar-lewagon .navbar-brand img {
   width: 40px;
+}
+
+.navbar {
+  margin-left: 40px;
+}
+
+#cur_user {
+  margin-left: -10px;
+}
+
+.nav-item-end {
+  margin-left: 20px;
+}
+
+#login-button {
+  margin: 0px 20px;
 }

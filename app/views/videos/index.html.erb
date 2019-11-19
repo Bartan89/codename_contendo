@@ -1,0 +1,21 @@
+
+<div class="container">
+  <% @videos.each do |video| %>
+    <div class="card" style="width: 29rem;">
+      <div class="card-body">
+        <p class="h4"><%=video.name%></p>
+      <%= link_to "Delete", video_path(video),
+      method: :delete,
+      data: { confirm: "Are you sure?" } %>
+           <iframe src="<%=video.video_path%>"
+            allowfullscreen="" width="420" height="235"></iframe>
+
+      <%= link_to "🇸🇪", new_video_path, class: "avatar" %>
+      <%= link_to "🇩🇰", new_video_path%>
+      <%= link_to "add translation", new_video_translation_path(video)%>
+      </div>
+    </div>
+  <% end  %>
+</div>
+
+
