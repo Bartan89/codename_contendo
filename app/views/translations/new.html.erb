@@ -1,1 +1,16 @@
-<h1>hello</h1>
+require 'json'
+
+<% if @video.translations.length > 0 %>
+    <h1>orignal transcript:</h1>
+  <p><%= JSON.parse(@video.translations.first.json) %></p>
+  <% else %>
+<div class="container">
+  <%= simple_form_for [@video, @translation]  do |f| %>
+    <%= f.input :json, as: :text %>
+    <%= f.submit "Submit .JSON", class: "btn btn-primary" %>
+  <% end %>
+</div>
+<% end %>
+
+
+

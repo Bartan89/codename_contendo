@@ -1,13 +1,28 @@
 class TranslationsController < ApplicationController
   def new
-    #shows all languages (dropdown)
-    #shows all languages already translated (if translated edit)
-    #
-    #
-
+      @video = Video.find(params[:video_id])
+      @translation = Translation.new
   end
 
-  def index
+  def create
+    @video = Video.find(params[:video_id])
+    @translation = Translation.new(sanitised_params)
+    @translation.video = @video
+    @translation.user = current_user
+    if @translation.save!
+      redirect_to video_path(@video)
+    else
+      render :new
+    end
+  end
 
+  def edit
+    @translation = "something"
+  end
+
+  private
+
+  def sanitised_params
+    params.require(:translation).permit(:json)
   end
 end

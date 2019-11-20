@@ -1,0 +1,34 @@
+<h1>hello</h1>
+
+<div class="container">
+<!--
+
+ -->
+<iframe src="<%=@video.video_path%>"allowfullscreen="" width="660" height="375"></iframe>
+
+</div>
+
+
+
+<br>
+
+
+<% if @video.translations.count == 0%>
+  <div class="container">
+    <%= link_to "upload .JSON", new_video_translation_path(@video), class: "btn btn-outline-secondary"%>
+    <p>To make it possible for everyone translate this video, we need to start by uploading a base translation in the .JSON format</p>
+
+  </div>
+<% else %>
+  <div class="container">
+    <%= link_to "add a translation", new_video_translation_path(@video), class: "btn btn-outline-secondary"%>
+  </div>
+<% end %>
+
+  <div class="container">
+  <h2> details here: </h2>
+
+  <p><%= @video.translations.first.json ? 'something' : 'something else' %></p>
+  <%= link_to "edit transcript", edit_video_translation_path(@video, @video.translations.first.id), class: "btn btn-outline-secondary"%>
+</div>
+

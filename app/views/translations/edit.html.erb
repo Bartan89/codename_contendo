@@ -1,0 +1,4 @@
+ <%= simple_form_for [@video, @translation]  do |f| %>
+    <%= f.input :json, as: :text %>
+    <%= f.submit "Submit .JSON", class: "btn btn-primary" %>
+  <% end %>
