@@ -9,7 +9,7 @@ class TranslationsController < ApplicationController
     @translation = Translation.new(sanitised_params)
     @translation.video = @video
     @translation.user = current_user
-    if @translation.save!
+    if @translation.save
       redirect_to video_path(@video)
     else
       render :new
@@ -17,7 +17,18 @@ class TranslationsController < ApplicationController
   end
 
   def edit
-    @translation = "something"
+      @video = Video.find(params[:video_id])
+      @translation = Translation.find(params[:id])
+  end
+
+  def update
+    @video = Video.find(params[:video_id])
+    @translation = Translation.find(params[:id])
+    if @translation.update(sanitised_params)
+      redirect_to video_path(@video)
+    else
+      render :edit
+    end
   end
 
   private

@@ -1,4 +1,6 @@
  <%= simple_form_for [@video, @translation]  do |f| %>
     <%= f.input :json, as: :text %>
-    <%= f.submit "Submit .JSON", class: "btn btn-primary" %>
+    <%= f.submit "overwrite and delete original .JSON", class: "btn btn-danger",
+    data: { confirm: "Are you sure? edit transcript influeces every translation newly created after the edit to transcript has been made" } %>
+
   <% end %>
