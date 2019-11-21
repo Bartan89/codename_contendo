@@ -13,7 +13,7 @@
 
 <% if @video.translations.count == 0%>
   <div class="container">
-    <%= link_to "upload .JSON", new_video_translation_path(@video), class: "btn btn-outline-secondary"%>
+    <%= link_to "Add Transcript", new_video_translation_path(@video), class: "btn btn-outline-secondary"%>
     <p>To make it possible for everyone translate this video, we need to start by uploading a base translation in the .JSON format</p>
 
   </div>

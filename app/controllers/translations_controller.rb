@@ -1,7 +1,11 @@
+require 'json'
+
 class TranslationsController < ApplicationController
   def new
       @video = Video.find(params[:video_id])
       @translation = Translation.new
+      @json = JSON.parse(@video.translations.first.json)
+      raise
   end
 
   def create
