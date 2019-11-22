@@ -24,5 +24,22 @@ encrypted_password.navbar-lewagon {
 }
 
 #login-button {
-  margin: 0px 20px;
+  margin: 5px 14px 1px 63px;
+  padding: 4px 25px 3px 23px;
 }
+
+#online {
+  color: #00F904;
+  margin: 16px -3px 20px 10px;
+  padding: 0px;
+  font-size: 5px;
+  vertical-align: text-top;
+};
+
+#offline {
+  color: #EA3A31;
+  margin: 16px -3px 20px 10px;
+  padding: 0px;
+  font-size: 5px;
+  vertical-align: text-top;
+};

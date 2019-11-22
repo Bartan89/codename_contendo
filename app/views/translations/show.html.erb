@@ -1,0 +1,13 @@
+<br>
+<br>
+
+<div class="container">
+  <pre><%= @translation.json %></pre>
+<% @lines.each do |element| %>
+  <p><%= "#{element.title} | #{element.content}" %></p>
+<% end %>
+  <%= link_to "all videos", videos_path %>
+</div>
+
+# add json:
+

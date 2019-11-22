@@ -14,6 +14,7 @@
       <ul class="navbar-nav mr-auto">
         <% if user_signed_in? %>
           <li class="nav-item">
+            <li class="nav-item" id="online">⬤</li>
             <% user = current_user.email %>
             <%= link_to "#{user} |", root_path, class: "nav-link" %>
           </li>
@@ -30,6 +31,9 @@
             <%= link_to "add a video", new_video_path, class: "btn btn-outline-secondary"%>
           </li>
         <% else %>
+            <li class="nav-item" id="offline">⬤</li>
+            <li class="nav-link">no user active</li>
+
           <li>
             <%= link_to "Login", new_user_session_path, class: "btn btn-primary", id: "login-button"%>
           </li>

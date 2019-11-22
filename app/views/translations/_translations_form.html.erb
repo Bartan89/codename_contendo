@@ -1,0 +1,8 @@
+<%= simple_form_for translation do |m| %>
+  <%= m.input :language, label: "what language are you adding?" %>
+    <%= m.simple_fields_for :lines, m.object.lines.order(:created_at) do |p| %>
+      <p><%= p.object.content %></p>
+      <%= p.input :content, label: ">" %>
+    <% end %>
+  <%= m.submit%>
+<% end %>

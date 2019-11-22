@@ -6,10 +6,7 @@
 
 </div>
 
-
-
 <br>
-
 
 <% if @video.translations.count == 0%>
   <div class="container">
@@ -19,23 +16,50 @@
   </div>
 <% else %>
   <div class="container">
-    <%= link_to "add a translation", new_video_translation_path(@video), class: "btn btn-outline-secondary"%>
+    <%= link_to "add a translation", video_translations_path(@video), class: "btn btn-outline-secondary", method: :post%>
   </div>
 <% end %>
 
 <div class="container">
   <h2> details here: </h2>
 
+
+<div class="container">
+  <ul>
+
+<% if @video.translations.count != 0 %>
+  <% @edit_translations.each do |element| %>
+      <td>
+        <li><%="language: #{element.language} | status: #{element.done ? "published" : "unpublished"}"%></li>
+        <li><%= link_to "Delete", translation_path(element),
+        class: "text-muted",
+        method: :delete,
+        data: { confirm: "Are you sure?" } %></li>
+      </td>
+      <%= link_to "edit",
+    edit_translation_path(element),
+    class: "btn btn-outline-secondary"%>
+  <% end %>
+<% end %>
+    </ul>
+</div>
+
+
+
+
+
+
 <% if @video.translations.first %>
 <p><%= "Transcript added #{@video.translations.first.created_at}" %></p>
     <%= link_to "edit transcript",
-    edit_video_translation_path(@video,
-    @video.translations.first.id),
+    edit_translation_path(@video.translations.first.id),
     data: { confirm: "Are you sure? edit transcript influeces every translation newly created after the edit to transcript has been made" },
     class: "btn btn-outline-secondary"%>
 <% else %>
 <p> <%= "no transcript or languages added yet" %> </p>
 <% end %>
 </div>
+
+
 
 

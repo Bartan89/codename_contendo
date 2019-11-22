@@ -1,15 +1,26 @@
-
-
-
-
+<!-- IF ITS THE FIRST TRANSLATION AKA TRANSCRIPT -->
 <% if @video.translations.length > 0 %>
     <h1>orignal transcript:</h1>
-  <p><%= @video.translations.first.json %></p>
-  <% else %>
-<div class="container">
-  <%= simple_form_for [@video, @translation]  do |f| %>
-    <%= f.input :json, as: :text %>
-    <%= f.submit "Submit .JSON", class: "btn btn-primary" %>
+
+
+  <% @video.translations.each do |element| %>
+    <p><%= "#{element.language}" %></p>
   <% end %>
-</div>
+
+    <%= link_to "all videos", videos_path %>
+
+
+  <div class="container">
+  </div>
+
+
+<!-- END OF THE FIRST TRANSLATION AKA TRANSCRIPT -->
+
+<% else %>
+  <div class="container">
+    <%= simple_form_for [@video, @translation]  do |f| %>
+      <%= f.input :json, as: :text %>
+      <%= f.submit "Submit .JSON", class: "btn btn-primary" %>
+    <% end %>
+  </div>
 <% end %>

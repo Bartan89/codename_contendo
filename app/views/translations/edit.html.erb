@@ -1,7 +1,10 @@
- <%= simple_form_for [@video, @translation]  do |f| %>
-    <%= f.input :json, as: :text %>
-    <%= f.submit "overwrite and delete original .JSON", class: "btn btn-danger",
-    data: { confirm: "Are you sure? edit transcript influeces every translation newly created after the edit to transcript has been made" } %>
 
-  <% end %>
 
+
+<div class="container">
+
+<iframe src="<%=@translation.video[:video_path]%>"
+              allowfullscreen="" width="420" height="235"></iframe>
+<h1>this is where we add translation</h1>
+  <%= render 'translations_form', translation: @translation %>
+</div>

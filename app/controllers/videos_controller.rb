@@ -20,6 +20,7 @@ class VideosController < ApplicationController
 
   def show
     @video = Video.find(params[:id])
+    @edit_translations = @video.translations[1..@video.translations.count-1]
   end
 
   def destroy

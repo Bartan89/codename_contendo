@@ -1,0 +1,42 @@
+# For dashboard:
+-- What videos did I recently work on?
+-- When did I work on those videos?
+-- What languages are they?
+
+-- What are all my translations?
+-- What are their languages
+-- What videos do they belong to?
+-- When did I publish them?
+
+# Video index:
+-- Who made this video?
+-- When was it added?
+-- How many published translations does it have?
+
+# Video show:
+-- What are the current unpublished translations I am working on in this video?
+-- Who uploaded the video?
+-- What are the existing translations for this video? And who made them? When?
+-- When was the transcript added?
+-- What is the transcript's language?
+
+
+
+### FOR TAs
+-- Summary of project:
++ IMPORTANT: TELL DIMITRI THAT SIMPLE FORM AND FORM HELPERS ARE SHIT. THANK YOU
++ After Effects (video editing software) can export all text in the video as a
+  JSON file
++ Project aim is to be a library of videos where users can import JSON files and
+  easily edit them through forms and then other users can download the translated
+  JSONs
++ WARNING: First translation uploaded for a video (a video has many translations,
+  a translation has many lines) is the main transcript and the base for all
+  other translations.
++ WARNING: Every time you create a new translation that is not the transcript,
+  the controller will clone the original translation (aka the transcript, aka
+  @video.translations.first) and its lines and redirect to an EDIT view for that
+  newly cloned model.
++ Yes I know that's not necessarily the most performant, but fuck form helpers
+  by the way.
++ Have fun.
