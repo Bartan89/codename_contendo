@@ -6,6 +6,12 @@ Rails.application.routes.draw do
 
   resources :videos do
     resources :translations, only: [:new, :create]
+    member do
+      post "shepard"
+    end
+    member do
+      post "revoke"
+    end
   end
 
   resources :translations, except: [:new, :create] do
@@ -19,5 +25,7 @@ Rails.application.routes.draw do
       post "request"
     end
   end
+
+  resources :dashboards, only: [:index]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

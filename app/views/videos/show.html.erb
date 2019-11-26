@@ -1,57 +1,57 @@
-<!--
 
+                                        <!--VIDEO-->
 
-Video here
-
-
--->
 <div class="container">
-  <br>
-    <h5><%="#{@video.name}"%></h5>
-      <iframe src="<%=@video.video_path%>"allowfullscreen=""
-      showinfo="0" width="660" height="375"></iframe>
-  <br>
+    <h2><%="#{@video.name}"%></h2>
+      <iframe src="<%=@video.video_path%>"width="660" height="375"></iframe>
 </div>
 
-<% if @video.translations.count == 0%>
-  <div class="container">
-    <%= link_to "Add Transcript",
-        new_video_translation_path(@video),
-        class: "btn btn-outline-secondary"%>
-      <p>To make it possible for everyone translate this video,
-      we need to start by uploading a base translation in the .JSON format</p>
-  </div>
-<% else %>
-  <div class="container">
-    <%= link_to "provide a translation",
-        video_translations_path(@video),
-        class: "btn btn-outline-secondary",
-        method: :post%>
 
-    <%  support = ""%>
-    <% if support =! "" %>
+                          <!--PROVIDE TRANSLATION & REQUEST/SHEPARD-->
+<div class="container">
+ <div class="row">
+<% if @video.translations.count == 0%>
+  <%= link_to "Add Transcript", new_video_translation_path(@video),
+    class: "btn btn-outline-secondary"%>
+    <p>To make it possible for everyone translate this video,
+    we need to start by uploading a base translation in the .JSON format</p>
+<% else %>
+  <%= link_to "provide a translation", video_translations_path(@video), method: :post,
+    class: "btn btn-outline-secondary"%>
+
+<% if @video.shephard_id != nil %>
     <div class="dropdown show">
       <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Request video in your language
+                  Request video
         </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
           <%  @published_translations.each do |translation| %>
           <!-- max 8 -->
-        <%= link_to "#{translation.language}", video_translations_path(@video), class: "dropdown-item", method: :post%>
-        <% end %>
+        <%= link_to "#{translation.language}", translation_path(translation), class: "dropdown-item"%>
+    <% end %>
+
         <% else  %>
-          <div class="container">
-          <%= link_to "shepard production",
-          video_translations_path(@video),
+          <%= link_to "shephard production",
+          shepard_video_path,
           class: "btn btn-outline-secondary",
           method: :post%>
-
       <% end %>
-    </div>
-</div>
-      <br>
-  </div>
+      </div>
 <% end %>
+
+<% if @video.shephard_id == current_user.id%>
+<%= link_to "revoke support",
+          revoke_video_path,
+          class: "btn btn-outline-primary",
+          method: :post%>
+<% end %>
+
+</div>
+</div>
+</div>
+<!--
+                                  PUBLISHED TRANSLATIONS:
+ -->
 
 <div class="container">
   <h4> Published translations: </h4>
@@ -70,6 +70,13 @@ Video here
 <div class="bg-info  text-white">
   <div class="container">
     <br>
+
+
+<!--
+                                  YOUR TRANSLATIONS:
+ -->
+
+
   <h4> Your translations: </h4>
         <div class="container">
   <% if @video.translations.count > 1 %>

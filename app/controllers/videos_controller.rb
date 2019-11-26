@@ -23,7 +23,6 @@ class VideosController < ApplicationController
   def show
     @video = Video.find(params[:id])
     authorize @video
-
     @edit_translations = @video.translations[1..@video.translations.count-1]
     @published_translations = @edit_translations.select do |t|
       t.done == true
@@ -36,6 +35,24 @@ class VideosController < ApplicationController
    temp.destroy
    redirect_to videos_path
   end
+
+
+  def shepard
+    @video = Video.find(params[:id])
+    authorize @video
+    @video.shephard_id = current_user.id
+    @video.save
+    redirect_to video_path(@video)
+end
+
+
+def revoke
+  @video = Video.find(params[:id])
+  authorize @video
+  @video.shephard_id = nil
+  @video.save
+  redirect_to video_path(@video)
+end
 
 
 

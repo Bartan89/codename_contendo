@@ -19,4 +19,12 @@ class VideoPolicy < ApplicationPolicy
     true
   end
 
+  def shepard?
+    true
+  end
+
+  def revoke?
+    true
+  end
+
 end
