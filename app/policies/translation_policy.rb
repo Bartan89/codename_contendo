@@ -29,5 +29,11 @@ class TranslationPolicy < ApplicationPolicy
       record.user == user
     end
 
+    def unpublish?
+      record.user == user
+    end
+
+
+
 
 end

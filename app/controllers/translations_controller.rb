@@ -82,6 +82,14 @@ end
     redirect_to video_path(@translation.video)
   end
 
+  def unpublish
+    @translation = Translation.find(params[:id])
+    authorize @translation
+    @translation.done = false
+    @translation.save!
+    redirect_to video_path(@translation.video)
+  end
+
 
   private
     def json_to_lines(translation)

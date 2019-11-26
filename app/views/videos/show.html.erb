@@ -27,6 +27,28 @@ Video here
         video_translations_path(@video),
         class: "btn btn-outline-secondary",
         method: :post%>
+
+    <%  support = ""%>
+    <% if support =! "" %>
+    <div class="dropdown show">
+      <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Request video in your language
+        </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <%  @published_translations.each do |translation| %>
+          <!-- max 8 -->
+        <%= link_to "#{translation.language}", video_translations_path(@video), class: "dropdown-item", method: :post%>
+        <% end %>
+        <% else  %>
+          <div class="container">
+          <%= link_to "shepard production",
+          video_translations_path(@video),
+          class: "btn btn-outline-secondary",
+          method: :post%>
+
+      <% end %>
+    </div>
+</div>
       <br>
   </div>
 <% end %>
@@ -34,8 +56,13 @@ Video here
 <div class="container">
   <h4> Published translations: </h4>
   <% @published_translations.each do |translation| %>
-  <h1><%= translation.id %></h1>
-  <h1><%= translation.language %></h1>
+  <td>
+    <% if current_user.email == translation.user.email %>
+    <li><%="language: #{translation.language} | You provided this translation" %></li>
+    <% else %>
+    <li><%="language: #{translation.language} | Translated by: #{translation.user.email}" %></li>
+    <% end %>
+  </td>
 <% end %>
 </div>
 <br>
@@ -45,41 +72,39 @@ Video here
     <br>
   <h4> Your translations: </h4>
         <div class="container">
-<!-- @video.translations.where(user:  current_user) -->
-<% if @video.user == current_user %>
   <% if @video.translations.count > 1 %>
-    <% @edit_translations.each do |element| %>
+    <% @my_translations.each do |element| %>
       <td>
-        <li><%="language: #{element.language == nil ? "not provided" : element.language}
-          | status: #{element.done ? "published" : "unpublished"}"%></li>
+        <li><%="Language: #{element.language == nil ? "not provided" : element.language}
+          | Status: #{element.done ? "published" : "unpublished"}"%></li>
       </td>
-    <br>
-
-  <div clas="container">
-    <%= link_to "Delete", translation_path(element),
-      class: "btn btn-secondary btn-sm",
-              method: :delete,
-              data: { confirm: "Are you sure?" } %>
-    <%= link_to "edit", edit_translation_path(element),
-      class: "btn btn-secondary btn-sm"%>
-      <!-- check to see if user provided language before publishing -->
-      <% if element.language == "" %>
-        <% if element.done == false %>
-        <%= link_to "Publish", edit_translation_path(element),
-            class: "btn btn-secondary btn-sm",
-            data: { confirm: "To pubish please provide a language to your translation." } %>
-        <% else %>
-        <%= link_to "Unpublish", edit_translation_path(element),
-            class: "btn btn-secondary btn-sm",
-            data: { confirm: "Are you sure you want to unpublish the translation?
-                              This means others users won't be able to see the translation you provided." } %>
-        <% end %>
-      <% else %>
-        <%= link_to "Publish", publish_translation_path(element), method: :patch,
-            class: "btn btn-secondary btn-sm"%>
-      <% end %>
       <br>
-  </div>
+
+      <div clas="container">
+        <%= link_to "Delete", translation_path(element),
+          class: "btn btn-secondary btn-sm",
+                  method: :delete,
+                  data: { confirm: "Are you sure?" } %>
+        <%= link_to "edit", edit_translation_path(element),
+          class: "btn btn-secondary btn-sm"%>
+          <!-- check to see if user provided language before publishing -->
+          <%unless element.language == "" %>
+            <% if element.done == false %>
+              <%= link_to "Publish", publish_translation_path(element), method: :patch,
+                class: "btn btn-secondary btn-sm"%>
+            <% else %>
+              <%= link_to "Unpublish", unpublish_translation_path(element), method: :patch,
+                class: "btn btn-secondary btn-sm",
+                data: { confirm: "Are you sure you want to unpublish the translation?
+                                  This means others users won't be able to see the translation you provided." } %>
+            <% end %>
+          <% else %>
+            <%= link_to "Publish", edit_translation_path(element),
+                class: "btn btn-secondary btn-sm",
+                data: { confirm: "To pubish please provide a language to your translation." } %>
+          <% end %>
+          <br>
+      </div>
     <% end %>
   <% end %>
   </div>
@@ -105,9 +130,9 @@ Video here
   <% end %>
     </div>
   </div>
-<% end %>
 
 <br>
 <br>
+
 
 
