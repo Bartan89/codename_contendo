@@ -1,65 +1,113 @@
-<div class="container">
 <!--
 
- -->
-<iframe src="<%=@video.video_path%>"allowfullscreen="" width="660" height="375"></iframe>
 
+Video here
+
+
+-->
+<div class="container">
+  <br>
+    <h5><%="#{@video.name}"%></h5>
+      <iframe src="<%=@video.video_path%>"allowfullscreen=""
+      showinfo="0" width="660" height="375"></iframe>
+  <br>
 </div>
-
-<br>
 
 <% if @video.translations.count == 0%>
   <div class="container">
-    <%= link_to "Add Transcript", new_video_translation_path(@video), class: "btn btn-outline-secondary"%>
-    <p>To make it possible for everyone translate this video, we need to start by uploading a base translation in the .JSON format</p>
-
+    <%= link_to "Add Transcript",
+        new_video_translation_path(@video),
+        class: "btn btn-outline-secondary"%>
+      <p>To make it possible for everyone translate this video,
+      we need to start by uploading a base translation in the .JSON format</p>
   </div>
 <% else %>
   <div class="container">
-    <%= link_to "add a translation", video_translations_path(@video), class: "btn btn-outline-secondary", method: :post%>
+    <%= link_to "provide a translation",
+        video_translations_path(@video),
+        class: "btn btn-outline-secondary",
+        method: :post%>
+      <br>
   </div>
 <% end %>
 
 <div class="container">
-  <h2> details here: </h2>
+  <h4> Published translations: </h4>
+  <% @published_translations.each do |translation| %>
+  <h1><%= translation.id %></h1>
+  <h1><%= translation.language %></h1>
+<% end %>
+</div>
+<br>
 
-
-<div class="container">
-  <ul>
-
-<% if @video.translations.count != 0 %>
-  <% @edit_translations.each do |element| %>
+<div class="bg-info  text-white">
+  <div class="container">
+    <br>
+  <h4> Your translations: </h4>
+        <div class="container">
+<!-- @video.translations.where(user:  current_user) -->
+<% if @video.user == current_user %>
+  <% if @video.translations.count > 1 %>
+    <% @edit_translations.each do |element| %>
       <td>
-        <li><%="language: #{element.language} | status: #{element.done ? "published" : "unpublished"}"%></li>
-        <li><%= link_to "Delete", translation_path(element),
-        class: "text-muted",
-        method: :delete,
-        data: { confirm: "Are you sure?" } %></li>
+        <li><%="language: #{element.language == nil ? "not provided" : element.language}
+          | status: #{element.done ? "published" : "unpublished"}"%></li>
       </td>
-      <%= link_to "edit",
-    edit_translation_path(element),
-    class: "btn btn-outline-secondary"%>
+    <br>
+
+  <div clas="container">
+    <%= link_to "Delete", translation_path(element),
+      class: "btn btn-secondary btn-sm",
+              method: :delete,
+              data: { confirm: "Are you sure?" } %>
+    <%= link_to "edit", edit_translation_path(element),
+      class: "btn btn-secondary btn-sm"%>
+      <!-- check to see if user provided language before publishing -->
+      <% if element.language == "" %>
+        <% if element.done == false %>
+        <%= link_to "Publish", edit_translation_path(element),
+            class: "btn btn-secondary btn-sm",
+            data: { confirm: "To pubish please provide a language to your translation." } %>
+        <% else %>
+        <%= link_to "Unpublish", edit_translation_path(element),
+            class: "btn btn-secondary btn-sm",
+            data: { confirm: "Are you sure you want to unpublish the translation?
+                              This means others users won't be able to see the translation you provided." } %>
+        <% end %>
+      <% else %>
+        <%= link_to "Publish", publish_translation_path(element), method: :patch,
+            class: "btn btn-secondary btn-sm"%>
+      <% end %>
+      <br>
+  </div>
+    <% end %>
   <% end %>
+  </div>
+
+
+  <% if @video.translations.first %>
+      <%= link_to "Edit transcript",
+      edit_translation_path(@video.translations.first.id),
+      data: { confirm: "Are you sure? edit transcript influeces every
+        translation newly created after the edit to transcript has been made" },
+      class: "text-white"%>
+  <% else %>
+  <p> <%= "no transcript or languages added yet" %> </p>
+  <% end %>
+
+  <%  if @video.translations.count > 0%>
+  <%= link_to "| Delete transcript", translation_path(@video.translations.first.id),
+          class: "text-white",
+          method: :delete,
+          data: { confirm: "Are you sure?" } %>
+  <br>
+  <br>
+  <% end %>
+    </div>
+  </div>
 <% end %>
-    </ul>
-</div>
 
-
-
-
-
-
-<% if @video.translations.first %>
-<p><%= "Transcript added #{@video.translations.first.created_at}" %></p>
-    <%= link_to "edit transcript",
-    edit_translation_path(@video.translations.first.id),
-    data: { confirm: "Are you sure? edit transcript influeces every translation newly created after the edit to transcript has been made" },
-    class: "btn btn-outline-secondary"%>
-<% else %>
-<p> <%= "no transcript or languages added yet" %> </p>
-<% end %>
-</div>
-
-
+<br>
+<br>
 
 

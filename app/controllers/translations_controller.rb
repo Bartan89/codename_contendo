@@ -12,10 +12,10 @@ end
 
   def create
     @video = Video.find(params[:video_id])
-
     ### CREATING TRANSCRIPT
     if @video.translations.length == 0 #checking if this is the transcript
       @translation = Translation.new(sanitised_params)
+      authorize @translation
       @translation.video = @video
       @translation.user = current_user
       json_to_lines(@translation) #create lines and set them to translation
@@ -28,7 +28,7 @@ end
     ### CREATING ADDITIONAL TRANSLATIONS
     else # if not the transcript, clone transcript and take to edit page
       @translation = clone_translation(@video)
-
+      authorize @translation
       if @translation.save
           redirect_to edit_translation_path(@translation)
       else
@@ -39,11 +39,12 @@ end
 
   def edit
       @translation = Translation.find(params[:id])
+      authorize @translation
   end
 
   def update
     @translation = Translation.find(params[:id])
-
+    authorize @translation
     @translation.lines.length.times do |i|
        line = Line.find(line_params["lines_attributes"][i.to_s]["id"])
        line.update(content: line_params["lines_attributes"][i.to_s]["content"])
@@ -61,14 +62,24 @@ end
 
   def show
     @translation = Translation.find(params[:id])
+    authorize @translation
     @lines = @translation.lines.order('created_at ASC')
   end
 
   def destroy
-   temp = Translation.find(params[:id])
-    video = Video.find(temp.video_id)
-   temp.destroy
+   @temp = Translation.find(params[:id])
+   authorize @temp
+    video = Video.find(@temp.video_id)
+   @temp.destroy
    redirect_to video_path(video)
+  end
+
+  def publish
+    @translation = Translation.find(params[:id])
+    authorize @translation
+    @translation.done = true
+    @translation.save
+    redirect_to video_path(@translation.video)
   end
 
 

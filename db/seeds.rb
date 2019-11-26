@@ -29,6 +29,16 @@ Translation.new()
   "title_7": "The end"
 }
 
+{
+  'title_7': 'Het einde',
+  'title_6': 'Bijna het einde',
+  'title_5': 'Dat is Koreaans',
+  'title_4': 'Hart',
+  'title_3': 'beetje kort',
+  'title_2': 'kort',
+  'title_1': 'kort'
+}
+
 
 {
 "title_1": "1",
