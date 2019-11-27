@@ -24,10 +24,13 @@ class VideosController < ApplicationController
     @video = Video.find(params[:id])
     authorize @video
     @edit_translations = @video.translations[1..@video.translations.count-1]
-    @published_translations = @edit_translations.select do |t|
-      t.done == true
+
+    unless @edit_translations.nil?
+      @published_translations = @edit_translations.select do |t|
+        t.done == true
+      end
+      @my_translations = @edit_translations.select {|t| t.user == current_user}
     end
-    @my_translations = @edit_translations.select {|t| t.user == current_user}
   end
 
   def destroy

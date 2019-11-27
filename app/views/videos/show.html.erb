@@ -2,13 +2,16 @@
                                         <!--VIDEO-->
 
 <div class="container">
+  <div class="row">
+  <div class="view_video">
     <h2><%="#{@video.name}"%></h2>
       <iframe src="<%=@video.video_path%>"width="660" height="375"></iframe>
+    </div>
 </div>
 
 
                           <!--PROVIDE TRANSLATION & REQUEST/SHEPARD-->
-<div class="container">
+<div class="published">
  <div class="row">
 <% if @video.translations.count == 0%>
   <%= link_to "Add Transcript", new_video_translation_path(@video),
@@ -27,9 +30,11 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
           <%  @published_translations.each do |translation| %>
           <!-- max 8 -->
-        <%= link_to "#{translation.language}", translation_path(translation), class: "dropdown-item"%>
+        <%= link_to "#{translation.language}", translation_requests_path(translation), class: "dropdown-item", method: :post%>
+        <% if translation == ""  %>
+          <p class="dropdown-item">no translations available yet</p>
+          <% end %>
     <% end %>
-
         <% else  %>
           <%= link_to "shephard production",
           shepard_video_path,
@@ -48,14 +53,16 @@
 
 </div>
 </div>
-</div>
 <!--
                                   PUBLISHED TRANSLATIONS:
  -->
 
 <div class="container">
   <h4> Published translations: </h4>
-  <% @published_translations.each do |translation| %>
+  <% if @published_translations == [] %>
+    <p>This video has no published translations</p>
+  <% end %>
+  <%  @published_translations && @published_translations.each do |translation| %>
   <td>
     <% if current_user.email == translation.user.email %>
     <li><%="language: #{translation.language} | You provided this translation" %></li>
@@ -65,12 +72,11 @@
   </td>
 <% end %>
 </div>
-<br>
-
+</div>
+</div>
 <div class="bg-info  text-white">
   <div class="container">
     <br>
-
 
 <!--
                                   YOUR TRANSLATIONS:

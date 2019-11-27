@@ -1,11 +1,12 @@
-<div class="p-2 mb-2 bg-primary text-white">   ⓘ In beta all users <strong>can</strong> delete any project, be careful.</div>
+<div class="p-2 mb-2 bg-primary text-white">
+  ⓘ In beta all users <strong>can</strong> delete any project, be careful.</div>
 
 
 <div class="container">
   <div class="row">
     <% @videos.each do |video| %>
-      <div class="card" style="width: 29rem;">
-        <div class="card-body">
+      <div class="video_card" style="width: 29rem;">
+
           <%= link_to video_path(video) do %>
             <h5><%="#{video.name}"%></h5>
             <% end %>
@@ -17,9 +18,10 @@
         <% elsif video.translations.count == 1%>
           <p>Be the first to add a translation</p>
         <% else %>
-          <p><%="#{video.translations.count-1} translation#{video.translations.count-1 == 1 ? nil : "s"} available"%></p>
+          <p><%="#{video.translations.count-1}
+          translation#{video.translations.count-1 == 1 ? nil : "s"} available"%></p>
         <% end %>
-      </div>
+
     </div>
   <% end  %>
   </div>

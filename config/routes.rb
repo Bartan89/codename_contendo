@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
 
 
+  get 'requests/create'
   devise_for :users
+
   root to: 'pages#home'
+
+  resources :dashboards, only: :show
 
   resources :videos do
     resources :translations, only: [:new, :create]
@@ -21,11 +25,9 @@ Rails.application.routes.draw do
     member do
       patch "unpublish"
     end
-    member do
-      post "request"
-    end
+    resources :requests, only: [:create, :destroy]
   end
 
-  resources :dashboards, only: [:index]
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

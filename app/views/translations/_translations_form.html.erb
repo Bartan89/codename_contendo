@@ -2,10 +2,10 @@
   <%= m.input :language, label: "what language are you adding?" %>
     <%= m.simple_fields_for :lines, m.object.lines.order(:created_at) do |p| %>
       <p><%= p.object.content %></p>
-      <% if @translation.lines[0].title[0] = "C"  %>
-        <%= p.input :content, label: ">" %>
-      <% else %>
+      <% if p.object.title == "dropdown"  %>
         <%= p.input :content, label: "pick a primary color for the video", collection: [['0', 'Bayer Green'], ['1', 'Bayer Blue'], ['2', 'Bayer Purpple']], label_method: :second, value_method: :first %>
+      <% else %>
+        <%= p.input :content, label: ">" %>
       <% end %>
     <% end %>
   <%= m.submit%>

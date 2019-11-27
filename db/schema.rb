@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_26_144355) do
+ActiveRecord::Schema.define(version: 2019_11_27_095541) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,15 @@ ActiveRecord::Schema.define(version: 2019_11_26_144355) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["translation_id"], name: "index_notifications_on_translation_id"
+  end
+
+  create_table "requests", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "translation_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["translation_id"], name: "index_requests_on_translation_id"
+    t.index ["user_id"], name: "index_requests_on_user_id"
   end
 
   create_table "translations", force: :cascade do |t|
@@ -72,6 +81,8 @@ ActiveRecord::Schema.define(version: 2019_11_26_144355) do
 
   add_foreign_key "lines", "translations"
   add_foreign_key "notifications", "translations"
+  add_foreign_key "requests", "translations"
+  add_foreign_key "requests", "users"
   add_foreign_key "translations", "users"
   add_foreign_key "translations", "videos"
   add_foreign_key "videos", "users"

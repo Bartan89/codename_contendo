@@ -5,6 +5,7 @@ class TranslationsController < ApplicationController
     @video = Video.find(params[:video_id])
     if @video.translations.length == 0
     @translation = Translation.new
+    authorize @translation
     else
     #after transcript:
   end
