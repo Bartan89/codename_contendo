@@ -1,0 +1,138 @@
+<div class="p-2 mb-2 bg-primary text-white">
+  ⓘ Your personal dashboard provides an overview of all requests, translations and videos you interacted with</div>
+      <div class="shadow bg-light pl-5 p-2 pb-5 mt-2 mb-5 text-dark">
+
+<br>
+  <div class="row mb-4">
+      <div class="btn btn-sm pb-2"><strong><p>This page includes:</p></strong></div>
+      <div class="btn btn-sm pb-2"><p>> Your pending requests</p></div>
+      <div class="btn btn-sm pb-2"><p>> Video your provided</p></div>
+      <div class="btn btn-sm pb-2"><p>> Translations you are working on</p></div>
+      <div class="btn btn-sm pb-2"><p>> Translations you shared</p></div>
+      <div class="btn btn-sm pb-2"><p>> Fullfilled requests</p></div>
+  </div>
+
+<div class="container ml-5 text-primary">
+  <h1>Your Dashboard:</h1>
+</div>
+  <br>
+
+<div class="container pl-5 pb-2 ml-2 text-primary">
+  <h3>Your pending requests:</h3>
+  <h6 class="bg-primary rounded text-white pl-4 p-2 m-2"> ⓘ Don't hestitate to contact the request handler responsible for the video in case of a long waiting time</h6>
+</div>
+
+<% if @requests != [] %>
+  <% @requests.each do |request| %>
+        <div class="row pt-2 ml-5">
+          <p><%= "Name: #{request.translation.video.name} |" %></p>
+          <p><%= "Request handler: #{request.translation.video.shephard.email} |" %></p>
+          <p><%= "Language requested: #{request.translation.language} |" %></p>
+          <p><%= "date: #{request.created_at}" %></p>
+          <p>| <%= link_to  "Mark as completed", class: "btn-primary"%></p>
+      </div>
+  <% end %>
+<% else %>
+  <div class="container ml-5">
+    <p>you currently don't have any requests</p>
+  </div>
+    <br>
+<% end %>
+    </div>
+
+
+<div class="shadow bg-light pl-5 p-2 pb-5 mt-2 mb-5 text-dark">
+
+
+<h3 class="container pl-5 pb-2 ml-2">Videos you provided:</h3>
+
+
+  <div class="shadow bg-info pl-5 p-2 mt-2 mb-5 text-white">
+      <% @videos.each do |video| %>
+        <div class="row mt-1 pt-2 ml-5">
+          <p>Name:<strong><%=" #{video.name} " %></strong></p>
+          <p>| Go to Video: <strong><%= link_to "Click here", video_path(video), class: "text-white"%></strong></p>
+          <p>| Delete Video: <strong><%= link_to "Click here", video_path(video),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" }, class: "text-white" %></strong></p>
+        </div>
+    <% end %>
+  </div>
+
+
+<br>
+
+
+<h3 class="container pl-5 pb-2 ml-2">Translations you are working on:</h3>
+
+<div class="shadow bg-info pl-5 p-2 mt-2 mb-5 text-white">
+    <% @unpublished.each do |element| %>
+      <div class="row mt-1 pt-2 ml-5">
+        <p>Name: <strong><%=" #{element.video.name}"%></strong></p>
+        <p>| Go to Video: <strong><%= link_to "Click here", video_path(element.video), class: "text-white"%></strong></p>
+        <p>| Language: <strong><%=" #{!element.language.blank? ? element.language : "not provided"}"%></strong></p>
+        <p>| Status: <strong><%=" #{element.done ? "Published": "Unpublished"}"%></strong></p>
+
+
+      </div>
+    <% end %>
+  </div>
+
+
+
+
+<br>
+
+<h3 class="container pl-5 pb-2 ml-2">Translations you shared:</h3>
+
+  <%  @published && @published.each do |translation| %>
+  <td>
+    <% if current_user.email == translation.user.email %>
+    <li><%="language: #{translation.language} | You provided this translation" %></li>
+    <% else %>
+    <li><%="language: #{translation.language} | Translated by: #{translation.user.email}" %></li>
+    <% end %>
+  </td>
+<% end %>
+</div>
+</div>
+</div>
+
+
+<div class="shadow bg-light pl-5 p-2 pb-5 mt-2 mb-5 text-dark">
+
+
+<div class="container pl-5 pb-2 ml-2 text-primary">
+  <h3>Fullfilled requests:</h3>
+  <h6 class="bg-primary rounded text-white pl-4 p-2 m-2"> ⓘ You can re-request a fulfilled request. If you do, write a short email to the request handler. </h6>
+</div>
+
+
+
+<% if @requests != [] %>
+  <% @requests.each do |request| %>
+        <div class="row pt-2 ml-5">
+          <p><%= "Name: #{request.translation.video.name} |" %></p>
+          <p><%= "Request handler: #{request.translation.video.shephard.email} |" %></p>
+          <p><%= "Language requested: #{request.translation.language} |" %></p>
+          <p><%= "date: #{request.created_at}" %></p>
+          <p>| <%= link_to  "Mark as completed", class: "btn-primary"%></p>
+      </div>
+  <% end %>
+<% else %>
+  <div class="container ml-5">
+    <p>you currently don't have any requests</p>
+  </div>
+    <br>
+<% end %>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+  </div>

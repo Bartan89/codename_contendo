@@ -55,7 +55,7 @@ end
     @translation.json = LinesToJsonService.to_json(@translation.lines.order('created_at ASC'))
 
     if @translation.save
-      redirect_to translation_path(@translation)
+      redirect_to inbox_path
     else
       render :edit
     end

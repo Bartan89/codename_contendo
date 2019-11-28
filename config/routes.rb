@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   root to: 'pages#home'
 
   resources :dashboards, only: :show
+  resources :inboxes, only: :show
 
   resources :videos do
     resources :translations, only: [:new, :create]

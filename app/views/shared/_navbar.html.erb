@@ -32,15 +32,15 @@
             <%= link_to "shepherd dashboard",  dashboard_path(current_user.id), class: "btn btn-outline-secondary" %>
           </li>
            <li class="nav-item-end">
-            <%= link_to "My videos / translations", translation_path(current_user.id), class: "btn btn-outline-secondary" %>
+            <%= link_to "My videos / translations", inbox_path(current_user.id), class: "btn btn-outline-secondary" %>
           </li>
           <% elsif current_user.videos.count != 0 && current_user.translations.count == 0 %>
            <li class="nav-item-end">
-            <%= link_to "My videos", translation_path(current_user.id), class: "btn btn-outline-secondary" %>
+            <%= link_to "My videos", inbox_path(current_user.id), class: "btn btn-outline-secondary" %>
           </li>
           <% elsif current_user.videos.count != 0 || current_user.translations.count != 0 %>
            <li class="nav-item-end">
-            <%= link_to "My videos / translations", translation_path(current_user.id), class: "btn btn-outline-secondary" %>
+            <%= link_to "My videos / translations", inbox_path(current_user.id), class: "btn btn-outline-secondary" %>
           </li>
 
 

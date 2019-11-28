@@ -34,9 +34,10 @@ class VideosController < ApplicationController
   end
 
   def destroy
-   temp = Video.find(params[:id])
-   temp.destroy
-   redirect_to videos_path
+   @temp = Video.find(params[:id])
+   authorize @temp
+   @temp.destroy
+   redirect_to inbox_path(current_user.id)
   end
 
 
