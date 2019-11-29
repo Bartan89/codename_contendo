@@ -3,7 +3,7 @@ class RequestsController < ApplicationController
     translation = Translation.find(params[:translation_id])
     @request = Request.create(user: current_user, translation: translation)
     authorize @request
-    redirect_to videos_path
+    redirect_to inbox_path(current_user)
   end
 
   def destroy

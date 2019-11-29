@@ -12,4 +12,10 @@ class RequestPolicy < ApplicationPolicy
   def destroy?
     true
   end
+
+  def update?
+    record.user == user
+  end
+
+
 end

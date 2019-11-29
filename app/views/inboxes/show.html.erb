@@ -22,14 +22,18 @@
   <h6 class="bg-primary rounded text-white pl-4 p-2 m-2"> ⓘ Don't hestitate to contact the request handler responsible for the video in case of a long waiting time</h6>
 </div>
 
+
+
 <% if @requests != [] %>
   <% @requests.each do |request| %>
-        <div class="row pt-2 ml-5">
+        <div class="lead row pt-2 ml-5">
+      <% if Time.now.utc - request.created_at < 0.114022 %>
+        <p class="lead pl-1 pr-1 shadow-sm text-secondary mr-2">ⓘ Just added: </p>
+      <% end %>
           <p><%= "Name: #{request.translation.video.name} |" %></p>
           <p><%= "Request handler: #{request.translation.video.shephard.email} |" %></p>
-          <p><%= "Language requested: #{request.translation.language} |" %></p>
-          <p><%= "date: #{request.created_at}" %></p>
-          <p>| <%= link_to  "Mark as completed", class: "btn-primary"%></p>
+          <p><%= "Language requested: #{request.translation.language}" %></p>
+          <p>| <%= link_to  "Mark as completed", inbox_path(request), method: :patch, class: "btn btn-success btn-sm text-white"%></p>
       </div>
   <% end %>
 <% else %>
@@ -109,22 +113,22 @@
 
 
 
-<% if @requests != [] %>
-  <% @requests.each do |request| %>
+<% if @fulfilled != [] %>
+  <% @fulfilled.each do |request| %>
         <div class="row pt-2 ml-5">
           <p><%= "Name: #{request.translation.video.name} |" %></p>
           <p><%= "Request handler: #{request.translation.video.shephard.email} |" %></p>
-          <p><%= "Language requested: #{request.translation.language} |" %></p>
-          <p><%= "date: #{request.created_at}" %></p>
-          <p>| <%= link_to  "Mark as completed", class: "btn-primary"%></p>
+          <p><%= "Language requested: #{request.translation.language}" %>|</p>
+          <p class="btn btn-danger btn-sm text-white">remove</p>
       </div>
   <% end %>
 <% else %>
   <div class="container ml-5">
-    <p>you currently don't have any requests</p>
+    <p>you currently don't have any fulfilled requests</p>
   </div>
     <br>
 <% end %>
+    </div>
 
     <br>
     <br>
