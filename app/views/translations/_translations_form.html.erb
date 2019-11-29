@@ -1,11 +1,15 @@
 <%= simple_form_for translation do |m| %>
   <%= m.input :language, label: "What language are you adding?" %>
     <%= m.simple_fields_for :lines, m.object.lines.order(:created_at) do |p| %>
-      <p><%= p.object.content %></p>
+      <div class="row">
+      <p class="lead ml-3">Translate this: </p>
+      <p class="lead ml-5"><%="'#{p.object.content}'"%></p>
+      </div>
       <% if p.object.title == "dropdown"  %>
         <%= p.input :content, label: "pick a primary color for the video", collection: [['0', 'Bayer Green'], ['1', 'Bayer Blue'], ['2', 'Bayer Purpple']], label_method: :second, value_method: :first %>
       <% else %>
-        <%= p.input :content, label: ">" %>
+        <%= p.input :content, label: false %>
+
       <% end %>
     <% end %>
         <!-- <input type="submit" name="commit" value="Update Translation" data-disable-with="Update Translation"> -->

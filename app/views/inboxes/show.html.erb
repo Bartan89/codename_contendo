@@ -56,9 +56,10 @@
         <div class="row mt-1 pt-2 ml-5">
           <p>Name:<strong><%=" #{video.name} " %></strong></p>
           <p>| Go to Video: <strong><%= link_to "Click here", video_path(video), class: "text-white"%></strong></p>
-          <p>| Delete Video: <strong><%= link_to "Click here", video_path(video),
+          <p>| Delete Video: <strong><%= link_to "Click here |", video_path(video),
                   method: :delete,
                   data: { confirm: "Are you sure?" }, class: "text-white" %></strong></p>
+          <p>amount of views: <%= video.engagement %></p>
         </div>
     <% end %>
   </div>

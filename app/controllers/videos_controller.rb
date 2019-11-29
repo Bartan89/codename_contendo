@@ -31,6 +31,10 @@ class VideosController < ApplicationController
       end
       @my_translations = @edit_translations.select {|t| t.user == current_user}
     end
+    if current_user.id != @video.user_id
+      @video.engagement += 1
+      @video.save
+    end
   end
 
   def destroy
