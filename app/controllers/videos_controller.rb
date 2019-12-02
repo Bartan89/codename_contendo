@@ -45,10 +45,10 @@ class VideosController < ApplicationController
   end
 
 
-  def shepard
+  def shepherd
     @video = Video.find(params[:id])
     authorize @video
-    @video.shephard_id = current_user.id
+    @video.shepherd_id = current_user.id
     @video.save
     redirect_to video_path(@video)
 end
@@ -57,7 +57,7 @@ end
 def revoke
   @video = Video.find(params[:id])
   authorize @video
-  @video.shephard_id = nil
+  @video.shepherd_id = nil
   @video.save
   redirect_to video_path(@video)
 end

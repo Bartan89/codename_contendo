@@ -27,7 +27,7 @@
           <li class="nav-item active">
             <%= link_to "Log out", destroy_user_session_path, method: :delete,  class: "nav-link"%>
           </li>
-           <% if current_user.videos_as_shephard.count != 0 %>
+           <% if current_user.videos_as_shepherd.count != 0 %>
            <li class="nav-item-end">
             <%= link_to "shepherd dashboard",  dashboard_path(current_user.id), class: "btn btn-outline-secondary" %>
           </li>

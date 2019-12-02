@@ -1,0 +1,25 @@
+
+<div class="container mt-5">
+<div class="d-flex flex-row bd-highlight mb-5">
+    <div class="shadow ml-5 p-3  bd-highlight">
+      <h2><%="#{@video.name}"%></h2>
+        <iframe src="<%=@video.video_path%>"width="660" height="375"></iframe>
+        <small>Included with order:</small>
+
+        <% @video.tags.each do |tag| %>
+         <%= link_to "#{tag.tag}", dashboard_tag_path(tag, @video), class: "badge badge-primary", method: :delete %>
+        <% end %>
+
+  </div>
+  <div class="shadow ml-5 mr-5 p-2 bd-highlight">
+    <h1>Tags you can add:</h1>
+
+    <% @tags.each do |tag| %>
+    <%= link_to "#{tag.tag}", dashboard_tags_path(tag, @video), class: "badge badge-primary", method: :post %>
+    <% end %>
+
+
+
+  </div>
+</div>
+</div>

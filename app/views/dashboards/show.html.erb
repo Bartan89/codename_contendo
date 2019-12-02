@@ -1,5 +1,28 @@
+
+
 <div class="p-2 mb-2 bg-primary text-white">   you got a new job</div>
+<div class="bg-light">
 <div class="container">
+
+<h1>Your shepherded videos</h1>
+<% if @videos != [] %>
+  <% @videos.each do |video| %>
+        <div class="lead row pt-2 ml-5">
+      <% if Time.now.utc - video.created_at < 0.114022 %>
+        <p class="lead pl-1 pr-1 shadow-sm text-secondary mr-2">ⓘ Just added: </p>
+      <% end %>
+          <p>| Go to Video: <strong><%= link_to "Click here", video_path(video), class: "text-white"%></strong></p>
+          <p>| add tags: <strong><%= link_to "Click here", dashboard_tag_path(params[:id] ,video), class: "text-white"%></strong></p>
+          <p><%= "Name: #{video.name} |" %></p>
+          <p>| <%= link_to  "Revoke support", inbox_path(video), method: :patch, class: "btn btn-success btn-sm text-white"%></p>
+      </div>
+  <% end %>
+<% else %>
+  <div class="container ml-5">
+    <p>you currently don't have any requests</p>
+  </div>
+    <br>
+<% end %>
 
 
   <h3> your jobs:</h3>

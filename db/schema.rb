@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_29_125854) do
+ActiveRecord::Schema.define(version: 2019_12_02_102024) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,12 @@ ActiveRecord::Schema.define(version: 2019_11_29_125854) do
     t.boolean "completed", default: false
     t.index ["translation_id"], name: "index_requests_on_translation_id"
     t.index ["user_id"], name: "index_requests_on_user_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "tag"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "translations", force: :cascade do |t|
@@ -75,10 +81,19 @@ ActiveRecord::Schema.define(version: 2019_11_29_125854) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
-    t.bigint "shephard_id"
+    t.bigint "shepherd_id"
     t.integer "engagement", default: 0
-    t.index ["shephard_id"], name: "index_videos_on_shephard_id"
+    t.index ["shepherd_id"], name: "index_videos_on_shepherd_id"
     t.index ["user_id"], name: "index_videos_on_user_id"
+  end
+
+  create_table "videos_tags", force: :cascade do |t|
+    t.bigint "tag_id"
+    t.bigint "video_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag_id"], name: "index_videos_tags_on_tag_id"
+    t.index ["video_id"], name: "index_videos_tags_on_video_id"
   end
 
   add_foreign_key "lines", "translations"
@@ -88,5 +103,7 @@ ActiveRecord::Schema.define(version: 2019_11_29_125854) do
   add_foreign_key "translations", "users"
   add_foreign_key "translations", "videos"
   add_foreign_key "videos", "users"
-  add_foreign_key "videos", "users", column: "shephard_id"
+  add_foreign_key "videos", "users", column: "shepherd_id"
+  add_foreign_key "videos_tags", "tags"
+  add_foreign_key "videos_tags", "videos"
 end

@@ -1,6 +1,17 @@
 <div class="p-2 mb-2 bg-primary text-white">
   ⓘ Your personal dashboard provides an overview of all requests, translations and videos you interacted with</div>
-      <div class="shadow bg-light pl-5 p-2 pb-5 mt-2 mb-5 text-dark">
+  <div class="shadow bg-light pl-5 p-2 pb-5 mt-2 mb-5 text-dark">
+
+
+    <div class="shadow mt-5 float-right mr-5 btn btn-light p-2 rounded">
+ <p class="lead m-3">Your community <br> score*:</p>
+  <div class="ml-2 row">
+   <h2 class= "text-secondary"><%= @stars %></h2>
+   <h2 class= "text-muted"><%= @old_stars %></h2>
+  </div>
+  <p><%= @motivational_sentence %></p>
+  <%= link_to  "Share to gain first star!", inbox_path(request), method: :patch, class: "btn btn-secondary btn-sm text-white"%></p>
+  </div>
 
 <br>
   <div class="row mb-4">
@@ -12,10 +23,15 @@
       <div class="btn btn-sm pb-2"><p>> Fullfilled requests</p></div>
   </div>
 
+
 <div class="container ml-5 text-primary">
   <h1>Your Dashboard:</h1>
 </div>
+
+</div>
   <br>
+
+
 
 <div class="container pl-5 pb-2 ml-2 text-primary">
   <h3>Your pending requests:</h3>
@@ -31,7 +47,7 @@
         <p class="lead pl-1 pr-1 shadow-sm text-secondary mr-2">ⓘ Just added: </p>
       <% end %>
           <p><%= "Name: #{request.translation.video.name} |" %></p>
-          <p><%= "Request handler: #{request.translation.video.shephard.email} |" %></p>
+          <p><%= "Request handler: #{request.translation.video.shepherd == nil ? "Request handler pulled out. Contact Administrator" : request.translation.video.shepherd.email } |" %></p>
           <p><%= "Language requested: #{request.translation.language}" %></p>
           <p>| <%= link_to  "Mark as completed", inbox_path(request), method: :patch, class: "btn btn-success btn-sm text-white"%></p>
       </div>
@@ -42,7 +58,7 @@
   </div>
     <br>
 <% end %>
-    </div>
+
 
 
 <div class="shadow bg-light pl-5 p-2 pb-5 mt-2 mb-5 text-dark">
@@ -118,7 +134,7 @@
   <% @fulfilled.each do |request| %>
         <div class="row pt-2 ml-5">
           <p><%= "Name: #{request.translation.video.name} |" %></p>
-          <p><%= "Request handler: #{request.translation.video.shephard.email} |" %></p>
+          <p><%= "Request handler: #{request.translation.video.shepherd == nil ? "Support revoked by request handler." : request.translation.video.shepherd.email } |" %></p>
           <p><%= "Language requested: #{request.translation.language}" %>|</p>
           <p class="btn btn-danger btn-sm text-white">remove</p>
       </div>
@@ -133,7 +149,13 @@
 
     <br>
     <br>
+<div class="container">
+  <p>Did you know that?</p>
+  <p>Video is made out of 24 or more 'frames' every second. If less than 24 per second the human brain starts to depict each individial frame. Artists use the notion of 'few frames per second', also known as 'Stop Motion'. Stop Motion is especially captivating when wanting to convey a playful message as it comes close to the jittery motion found when playing with toys. No suprise the 2014 released "Lego Movie" was made entirely in 'Stop Motion'. Can health communication push out visual messages in Stop Motion?</p>
+</div>
     <br>
+    <small class="container mb-4 ml-4">*Community Score is a palyful method to stimulate sharing within the community. It is not used to track performance. Click here to disable it. </small>
+
     <br>
     <br>
     <br>

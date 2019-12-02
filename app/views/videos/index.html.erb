@@ -2,24 +2,28 @@
   ⓘ In beta all users <strong>can</strong> delete any project, be careful.</div>
 
 
+
 <div class="container">
   <div class="row">
     <% @videos.each do |video| %>
-      <div class="video_card" style="width: 29rem;">
+      <div class="shadow-sm bg-light pt-2 pb-2 pl-4 m-2" style="width: 29rem;">
 
           <%= link_to video_path(video) do %>
-            <h5><%="#{video.name}"%></h5>
+            <h5 ><%="#{video.name}"%></h5>
             <% end %>
-             <iframe src="<%=video.video_path%>"
+             <iframe class="border" src="<%=video.video_path%>"
               allowfullscreen="" width="420" height="235"></iframe>
 
         <% if !video.translations.first %>
-          <p class="btn btn-outline-secondary">awaiting transcript></p>
+          <%= link_to "Awaiting transcript...", video_path(video), class: "btn btn-outline-secondary btn-sm"%>
         <% elsif video.translations.count == 1%>
           <p>Be the first to add a translation</p>
         <% else %>
-          <p><%="#{video.translations.count-1}
-          translation#{video.translations.count-1 == 1 ? nil : "s"} available"%></p>
+          <small class="badge badge-primary"><%="#{video.translations.count-1}
+          translation#{video.translations.count-1 == 1 ? nil : "s"} available"%></small>
+          <% video.tags.each do |tag| %>
+          <small class="badge badge-secondary text-white"><%= tag.tag %></small>
+          <% end %>
         <% end %>
 
     </div>

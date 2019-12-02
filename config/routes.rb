@@ -6,13 +6,15 @@ Rails.application.routes.draw do
 
   root to: 'pages#home'
 
-  resources :dashboards, only: :show
+  resources :dashboards, only: :show  do
+    resources :tags, only: [:show, :create, :destroy]
+  end
   resources :inboxes, only: [:show, :update]
 
   resources :videos do
     resources :translations, only: [:new, :create]
     member do
-      post "shepard"
+      post "shepherd"
     end
     member do
       post "revoke"

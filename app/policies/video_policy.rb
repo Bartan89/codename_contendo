@@ -19,8 +19,8 @@ class VideoPolicy < ApplicationPolicy
     true
   end
 
-  def shepard?
-    true
+  def shepherd?
+    record.user = user
   end
 
   def revoke?

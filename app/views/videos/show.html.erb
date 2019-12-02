@@ -1,17 +1,37 @@
 
                                         <!--VIDEO-->
-
-<div class="container">
-  <div class="row">
-  <div class="view_video">
-    <h2><%="#{@video.name}"%></h2>
-      <iframe src="<%=@video.video_path%>"width="660" height="375"></iframe>
+<div class="container mt-5">
+<div class="d-flex flex-row bd-highlight mb-5">
+    <div class="shadow ml-5 p-3  bd-highlight">
+      <h2><%="#{@video.name}"%></h2>
+        <iframe src="<%=@video.video_path%>"width="660" height="375"></iframe>
+        <small>Included with order:</small>
+        <span class="badge badge-secondary badge-outlined">Complete English Open Files</span>
+        <span class="badge badge-primary rounded-0">16:9 and square</span>
+        <span class="badge badge-primary">Clean English Open Files</span>
+        <span class="badge badge-primary">Clean English Open Files</span>
+<span class="badge badge-primary">Clean English Open Files</span>
+        <span class="badge badge-primary">Clean English Open Files</span>
+  </div>
+  <div class="shadow ml-5 mr-5 p-2 bd-highlight">
+    <h1>description:</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt voluptate enim aspernatur praesentium ullam. Est, nam explicabo! Hic amet obcaecati adipisci, minus ad voluptatem harum natus, ipsum recusandae eligendi dolorum.</p>
+    <h4 class="fas fa-project-diagram"></h4>
+    <p>Campaign? No</p>
+    <div class="text-center">
+      <h4 class="fas fa-vial"></h4>
+      <small>Cardiovascular</small>
     </div>
+    <h4 class="fas fa-ruler-combined"></h4>
+    <i class=" fas fa-microphone-alt">text</i>
+  </div>
+</div>
 </div>
 
 
+
                           <!--PROVIDE TRANSLATION & REQUEST/SHEPARD-->
-<div class="published">
+<div class="shadow bg-light p-5 mb-5">
  <div class="row">
 <% if @video.translations.count == 0%>
   <%= link_to "Add Transcript", new_video_translation_path(@video),
@@ -22,7 +42,7 @@
   <%= link_to "provide a translation", video_translations_path(@video), method: :post,
     class: "btn btn-outline-secondary"%>
 
-<% if @video.shephard_id != nil %>
+<% if @video.shepherd_id != nil %>
     <div class="dropdown show">
       <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Request video
@@ -36,15 +56,18 @@
           <% end %>
     <% end %>
         <% else  %>
-          <%= link_to "shephard production",
-          shepard_video_path,
+          <%= link_to "shepherd production",
+          shepherd_video_path,
           class: "btn btn-outline-secondary",
           method: :post%>
       <% end %>
+
+
+
       </div>
 <% end %>
 
-<% if @video.shephard_id == current_user.id%>
+<% if @video.shepherd_id == current_user.id%>
 <%= link_to "revoke support",
           revoke_video_path,
           class: "btn btn-outline-primary",
@@ -74,17 +97,14 @@
 </div>
 </div>
 </div>
-<div class="bg-info  text-white">
-  <div class="container">
-    <br>
+
 
 <!--
                                   YOUR TRANSLATIONS:
  -->
 
-
-  <h4> Your translations: </h4>
-        <div class="container">
+<div class="container shadow bg-light p-5 mb-5 text-primary">
+  <h4> Your draft translations for: <strong><%=" #{@video.name}"%></strong></h4>
   <% if @video.translations.count > 1 %>
     <% @my_translations.each do |element| %>
       <td>
