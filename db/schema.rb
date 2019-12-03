@@ -10,10 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_02_102024) do
+ActiveRecord::Schema.define(version: 2019_12_03_154048) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "choices", force: :cascade do |t|
+    t.string "title"
+    t.string "content"
+    t.string "img"
+    t.string "color"
+    t.bigint "format_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["format_id"], name: "index_choices_on_format_id"
+  end
+
+  create_table "formats", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "icons", force: :cascade do |t|
+    t.text "json"
+    t.bigint "format_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["format_id"], name: "index_icons_on_format_id"
+  end
 
   create_table "lines", force: :cascade do |t|
     t.string "title"
@@ -41,6 +66,14 @@ ActiveRecord::Schema.define(version: 2019_12_02_102024) do
     t.boolean "completed", default: false
     t.index ["translation_id"], name: "index_requests_on_translation_id"
     t.index ["user_id"], name: "index_requests_on_user_id"
+  end
+
+  create_table "scenes", force: :cascade do |t|
+    t.integer "amount"
+    t.bigint "format_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["format_id"], name: "index_scenes_on_format_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -96,10 +129,13 @@ ActiveRecord::Schema.define(version: 2019_12_02_102024) do
     t.index ["video_id"], name: "index_videos_tags_on_video_id"
   end
 
+  add_foreign_key "choices", "formats"
+  add_foreign_key "icons", "formats"
   add_foreign_key "lines", "translations"
   add_foreign_key "notifications", "translations"
   add_foreign_key "requests", "translations"
   add_foreign_key "requests", "users"
+  add_foreign_key "scenes", "formats"
   add_foreign_key "translations", "users"
   add_foreign_key "translations", "videos"
   add_foreign_key "videos", "users"

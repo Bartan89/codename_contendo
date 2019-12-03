@@ -1,7 +1,7 @@
 
 <div class="navbar">
   <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
-    <%= link_to "#", class: "navbar-brand" do %>
+    <%= link_to "videos", class: "navbar-brand" do %>
       <%= image_tag "logo.png" %>
       <% end %>
 
@@ -19,10 +19,13 @@
             <%= link_to "#{user} |", root_path, class: "nav-link" %>
           </li>
           <li class="nav-item active">
-            <%= link_to "Home", root_path, class: "nav-link" %>
+
           </li>
           <li class="nav-item active">
             <%= link_to "All videos", videos_path, class: "nav-link" %>
+          </li>
+           <li class="nav-item active">
+            <%= link_to "Video Formats", formats_path, class: "nav-link" %>
           </li>
           <li class="nav-item active">
             <%= link_to "Log out", destroy_user_session_path, method: :delete,  class: "nav-link"%>

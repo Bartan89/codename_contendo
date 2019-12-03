@@ -1,9 +1,51 @@
 <div class="p-2 mb-2 bg-primary text-white">
   ⓘ In beta all users <strong>can</strong> delete any project, be careful.</div>
 
+<!-- [...] -->
+
+<div class="float-left pr-4 pl-4 pt-4">
+  <%= form_tag videos_path, method: :get do %>
+    <%= text_field_tag :query,
+      params[:query],
+      class: "form-control",
+      placeholder: "Find a video"
+    %>
+    <%= submit_tag "Search", class: "btn btn-primary" %>
+  <% end %>
+
+<div class="mt-5">
 
 
-<div class="container">
+
+
+
+<% @tags.each do |tag| %>
+  <%= form_tag videos_path, method: :get do %>
+    <%= hidden_field_tag :tag, tag.tag%>
+    <small><%= submit_tag tag.tag, class: "btn-sm border btn-secondary" %></small>
+  <% end %>
+<% end %>
+
+
+
+</div>
+
+</div>
+
+<!-- the list of movies -->
+
+
+<div class="container pt-5">
+<% if !params[:query].blank? %>
+  <h4 class="pb-0"> <%= "Search results for: #{params[:query]}" %> </h4>
+  <small class=""> <%= link_to "Click here to display all videos", videos_path %> </small>
+  <% if @videos.blank? %>
+    <h1 class="text-center mt-5 pt-5">No results found <i class="far fa-sad-tear"></i></h1>
+  <% else %>
+    <h1 class="text-center mt-5 pt-5 pb-5"><%="We found #{@videos.count} result#{@videos.count > 1 ? "s": ""} "%><i class="far fa-smile-wink"></i></h1>
+  <% end %>
+<% end %>
+
   <div class="row">
     <% @videos.each do |video| %>
       <div class="shadow-sm bg-light pt-2 pb-2 pl-4 m-2" style="width: 29rem;">
@@ -31,3 +73,4 @@
   </div>
 </div>
 
+<%= will_paginate @videos_sorted, class: "float-right lead btn btn-secondary text-white" %>

@@ -21,6 +21,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :formats, only: :index
+
   resources :translations, except: [:new, :create] do
     member do
       patch "publish"

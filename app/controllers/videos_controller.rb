@@ -1,6 +1,17 @@
+require 'will_paginate/array'
 class VideosController < ApplicationController
   def index
+    @tags = Tag.all
     @videos = policy_scope(Video)
+    if params[:query].present?
+      @videos = Video.search_by_name_and_video_path(params[:query])
+    elsif params[:tag].present?
+      @tag = Tag.where(tag: params[:tag])
+      @videos = Video.joins(:tags).where('tags.tag = ?', params[:tag])
+    else
+      @videos = Video.all
+    end
+    @videos_sorted = Video.paginate(page: params[:page], per_page: 2)
   end
 
 
@@ -66,6 +77,8 @@ end
 
 
   private
+
+
 
   def video_params
     params.require(:video).permit(:video_path, :name)
