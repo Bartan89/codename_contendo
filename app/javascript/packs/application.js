@@ -17,6 +17,22 @@ bmElements.forEach(element => {
 });
 
 
+var bmElementsNoLoop = document.querySelectorAll('.bm-element-no-loop');
+
+
+bmElementsNoLoop.forEach(element => {
+    console.log(element.dataset.icon)
+  lottie.loadAnimation({
+  container: element, // the dom element that will contain the animation
+  renderer: 'svg',
+  autoplay: true, // Optional
+  loop: false,
+  animationData: JSON.parse(element.dataset.icon) // the path to the animation json
+  })
+});
+
+
+
 
 // var slider = document.getElementById("myRange");
 // var output = document.getElementById("demo");

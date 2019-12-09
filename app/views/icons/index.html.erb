@@ -34,7 +34,7 @@
 <br>
 
 <div class="row ml-5 mt-5 datafetch" >
-  <% @icons.each do |icon|%>
+  <% @icons.where(:hidden => false).each do |icon|%>
       <div class="ml-5 mr-3 mt-2 shadow" style="width: 16rem;">
         <div class="card-body">
           <div id="bm" class="bm-element" data-icon="<%=icon.json%>"></div>

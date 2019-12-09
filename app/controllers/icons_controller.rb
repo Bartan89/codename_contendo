@@ -4,7 +4,6 @@ class IconsController < ApplicationController
     @icons = Icon.all
     @icons = policy_scope(Icon)
     @picks = Pick.all
-
   end
 
 
@@ -31,7 +30,7 @@ class IconsController < ApplicationController
   private
 
   def icon_params
-    params.require(:icon).permit(:json, :name)
+    params.require(:icon).permit(:json, :name, :hidden)
   end
 
 

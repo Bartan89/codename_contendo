@@ -32,6 +32,7 @@ class VideosController < ApplicationController
   end
 
   def show
+    @icons = Icon.all
     @video = Video.find(params[:id])
     authorize @video
     @edit_translations = @video.translations[1..@video.translations.count-1]

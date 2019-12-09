@@ -1,73 +1,81 @@
-
 <style>
   #bm {
-    height: 40px;
+    height: 20px;
     width: 40px;
     position: relative;
   }
+
+
 </style>
 
-
-
-                                        <!--VIDEO-->
+<!--VIDEO-->
 <div class="container mt-5">
-<div class="d-flex flex-row bd-highlight mb-5">
+  <div class="d-flex flex-row bd-highlight mb-5">
     <div class="shadow ml-5 p-3  bd-highlight">
       <h2><%="#{@video.name}"%></h2>
         <iframe src="<%=@video.video_path%>"width="660" height="375"></iframe>
-
-        <% @video.tags.each do |tag|  %>
-          <span class="badge badge-secondary badge-outlined"><%= tag.tag  %></span>
+          <% @video.tags.each do |tag|  %>
+            <span class="badge badge-secondary badge-outlined"><%= tag.tag  %></span>
         <% end %>
-
-  </div>
+    </div>
   <div class="shadow ml-5 mr-5 p-2 bd-highlight">
     <h1>Description:</h1>
-    <% if !@video.description.blank? %>
-    <p><%="#{@video.description}"%></p>
-    <p class="border-bottom pb-2"> No description added</p>
-    <% else %>
-    <h2 class="ml-5 far fa-meh-rolling-eyes"></h2>
-    <p class="border-bottom pb-2"> No description added</p>
-    <% end %>
+      <% if !@video.description.blank? %>
+        <p><%="#{@video.description}"%></p>
+      <% else %>
+        <h2 class="ml-5 far fa-meh-rolling-eyes"></h2>
+          <p class="border-bottom pb-2"> No description added</p>
+      <% end %>
     <div class="container row">
-      <p class="pr-2"> Part of campaign? </p>
-      <p><%="#{@video.campaign == true ? "Yes": "No"}"%></p>
+        <p class="pr-2"> Part of campaign? </p>
+        <p><%="#{@video.campaign == true ? "Yes": "No"}"%></p>
+      </div>
+        <div>
+      <h5>'Globality' score:</h5>
+      <% if  @video.description.blank?%>
+      <small>Description missing</small>
+      <span id="bm-element-no-loop" class="bm-element-no-loop" data-icon="<%=@icons.where(:name => 'hico-loading-2')[0].json%>"></span>
+      <% elsif @video.translations.blank? %>
+      <small>Transcript missing</small>
+      <span id="bm-element-no-loop" class="bm-element-no-loop" data-icon="<%=@icons.where(:name => 'hico-loading-2')[0].json%>"></span>
+      <% elsif @video.shepherd.blank? %>
+      <small>No Shepherd yet</small>
+      <span id="bm-element-no-loop" class="bm-element-no-loop" data-icon="<%=@icons.where(:name => 'hico-loading-5')[0].json%>"></span>
+      <% elsif @video.tags.blank? %>
+      <small>Tags are missing</small>
+      <span id="bm-element-no-loop" class="bm-element-no-loop" data-icon="<%=@icons.where(:name => 'hico-loading-5')[0].json%>"></span>
+      <% else %>
+       <small>Content has all elements</small>
+      <span id="bm-element-no-loop" class="bm-element-no-loop" data-icon="<%=@icons.where(:name => 'hico-loading-5')[0].json%>"></span>
+      <% end %>
     </div>
-
-
-
-
   </div>
 </div>
-</div>
 
-
-
-                          <!--PROVIDE TRANSLATION & REQUEST/SHEPARD-->
+<!--PROVIDE TRANSLATION & REQUEST/SHEPARD-->
 <div class=" container shadow bg-light p-5 mb-5">
  <div class="row">
-<% if @video.translations.count == 0%>
-  <%= link_to "Add Transcript", new_video_translation_path(@video),
-    class: "btn btn-outline-secondary"%>
-    <p>To make it possible for everyone translate this video,
-    we need to start by uploading a base translation in the .JSON format</p>
-<% else %>
-  <%= link_to "provide a translation", video_translations_path(@video), method: :post,
-    class: "btn btn-outline-secondary"%>
-
-<% if @video.shepherd_id != nil %>
-    <div class="dropdown show d-flex">
-      <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <% if @video.translations.count == 0%>
+      <div class="container">
+      <%= link_to "Add Transcript", new_video_translation_path(@video),
+      class: "btn btn-outline-secondary"%>
+      <span>To make it possible for everyone translate this video,
+      we need to start by uploading a base translation in the .JSON format</span>
+      </div>
+    <% else %>
+      <%= link_to "provide a translation", video_translations_path(@video), method: :post,
+      class: "btn btn-outline-secondary"%>
+    <% if @video.shepherd_id != nil %>
+      <div class="dropdown show d-flex">
+        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Request video
         </a>
-
         <% current_user.translations.where(:done => true).each do |translation| %>
-            <% if Time.now.utc - translation.updated_at < 0.514022 %>
-
+          <% if Time.now.utc - translation.updated_at < 0.514022 %>
             <div id="bm" class="bm-element" data-icon="<%=Icon.last.json%>"></div>
             <span class="pt-2">You can request your video now</span>
-        <% end %>        <% end %>
+        <% end %>
+      <% end %>
 
 
 
@@ -186,14 +194,12 @@
           class: "text-white",
           method: :delete,
           data: { confirm: "Are you sure?" } %>
-  <br>
-  <br>
-  <% end %>
-    </div>
-  </div>
 
-<br>
-<br>
+    <% end %>
+  </div>
+</div>
+
+
 
 
 

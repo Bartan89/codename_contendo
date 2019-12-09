@@ -1,19 +1,19 @@
 
 <style>
   #bm {
-    height: 200px;
-    width: 200px;
+    height: 129px;
+    width: 238px;
     position: relative;
   }
 </style>
 
 
 
-
+<% if @icons.count > 0 %>
 <div class="row ml-5 mt-5">
       <div class="ml-5 mr-3 mt-2 shadow" style="width: 18rem;">
         <div class="card-body">
-          <div id="bm" class="bm-element" data-icon="<%=@icons.first.json%>"></div>
+          <div id="bm" class="bm-element" data-icon="<%=@icons.where(:name => 'hico-welcome')[0].json%>"></div>
           <h5 class="card-title">Animated icons</h5>
   <%= link_to "Find your favourites", icons_path, class: "btn btn-secondary" %>
           <br>
@@ -22,7 +22,7 @@
           <small>All <span class="badge badge-primary"><%= @icons.count*37 %></span> of them</small>
         </div>
       </div>
-
+<% end %>
 
 
     <% @formats.each do |format| %>
