@@ -7,47 +7,24 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-# User.new(email: 'john@example.com', password: '123456')
 
-# Translation.new()
+puts 'Cleaning database...'
+User.destroy_all
+Tag.destroy_all
+Video.destroy_all
+Translation.destroy_all
+Line.destroy_all
+Format.destroy_all
+Icon.destroy_all
 
-# {
-#   "title_1": "first_title",
-#   "title_2": "second_title",
-#   "title_3": "third_title",
-#   "title_4": "fourth_title",
-#   "title_5": "fift_title"
-# }
+puts 'creating users'
+User.create!(:email => 'bart.kuijper@example.com', :password => '123123')
+User.create!(:email => 'thomas.velle@example.com', :password => '123123')
 
-# {
-#   "title_1": "Hello!",
-#   "title_2": "this is a bit of a longer title",
-#   "title_3": "excitingly short",
-#   "title_4": "심혈관 질환",
-#   "title_5": "That is Korean",
-#   "title_6": "Almost the end",
-#   "title_7": "The end"
-# }
+puts 'creating tags'
 
-# {
-#   'title_7': 'Het einde',
-#   'title_6': 'Bijna het einde',
-#   'title_5': 'Dat is Koreaans',
-#   'title_4': 'Hart',
-#   'title_3': 'beetje kort',
-#   'title_2': 'kort',
-#   'title_1': 'kort'
-# }
+tags = ['Cardiovascular', '16:9', 'square']
 
-
-# {
-# "title_1": "1",
-# "title_2": "2",
-# "title_3": "3"
-# }
-
-
-# https://www.youtube.com/embed/dst3H5tJWRs
-
-
-
+tags.each do |tag|
+  Tag.create!(:tag => tag)
+end
