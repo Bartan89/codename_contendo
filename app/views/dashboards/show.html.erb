@@ -1,20 +1,48 @@
+<div class="container shadow p-3">
+  <h1>Your shepherded videos</h1>
+    <table class="table table-borderless table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Larry</td>
+          <td>the Bird</td>
+          <td>@twitter</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
 
 
-<div class="p-2 mb-2 bg-primary text-white">   you got a new job</div>
-<div class="bg-light">
-<div class="container">
-
-<h1>Your shepherded videos</h1>
 <% if @videos != [] %>
   <% @videos.each do |video| %>
-        <div class="lead row pt-2 ml-5">
+        <div class="lead row pt-2 ml-1">
       <% if Time.now.utc - video.created_at < 0.114022 %>
         <p class="lead pl-1 pr-1 shadow-sm text-secondary mr-2">ⓘ Just added: </p>
       <% end %>
-          <p>| Go to Video: <strong><%= link_to "Click here", video_path(video), class: "text-white"%></strong></p>
-          <p>| add tags: <strong><%= link_to "Click here", dashboard_tag_path(params[:id] ,video), class: "text-white"%></strong></p>
-          <p><%= "Name: #{video.name} |" %></p>
-          <p>| <%= link_to  "Revoke support", inbox_path(video), method: :patch, class: "btn btn-success btn-sm text-white"%></p>
+          <p class="pr-2"><%= "Name: #{video.name}" %></p>
+          <p>Go to Video: <strong><%= link_to "Click here", video_path(video), class: "mr-2 btn btn-primary mr-2 ml-2"%></strong></p>
+          <p> add tags: <strong><%= link_to "Click here", dashboard_tag_path(params[:id] ,video), class: "btn btn-primary mr-2 ml-2"%></strong></p>
+          <p><%= link_to  "Revoke support", inbox_path(video), method: :patch, class: "btn btn-success  text-white"%></p>
       </div>
   <% end %>
 <% else %>
@@ -40,6 +68,20 @@
   </div>
   <div class="p-3 mb-2 bg-info text-white">
     <p>copy JSON:</p>
+
+    <div class="p-2 mb-2 bg-primary text-white">   you got a new job</div>
+<div class="bg-light">
+<div class="container">
+    <div class="text-secondary form-group">
+    <label for="exampleFormControlTextarea1">Example textarea</label>
+    <textarea class="bn-2 bg-dark text-secondary form-control" id="myText" rows="7"><%= translation.json %></textarea>
+    <div id="copy-prompt"class="lead d-none text-white text-center bg-success">
+      <small>JSON coppied</small>
+    <small class="fas fa-check text-white"></small>
+
+    </div>
+  </div>
+    <button class="mn-2 btn-sm btn-dark text-white" id="btnCopy"><i class="far fa-clipboard"></i><small id="btn-copy" class="pl-2">Copy</small></button>
   <pre class="container text-white"><%= translation.json %></pre>
   </div>
   <% translation.requests.each do |request| %>
@@ -56,4 +98,17 @@
   <% end %>
 <% end %>
 
+
+<script>
+     //   document.getElementById("btnCopy").addEventListener("click", function(){
+     //   var copyText = document.getElementById("myText");
+     //   copyText.select();
+     //   document.execCommand("Copy");
+     //   document.getElementById("copy-prompt").classList.remove('d-none')
+     //   var paragraph = document.getElementById("btn-copy");
+     //   var text = document.createTextNode(" again");
+
+     //  paragraph.appendChild(text);
+     // });
+</script>
 

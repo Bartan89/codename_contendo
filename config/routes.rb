@@ -21,8 +21,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :formats, only: :index
-
   resources :translations, except: [:new, :create] do
     member do
       patch "publish"
@@ -33,6 +31,11 @@ Rails.application.routes.draw do
     resources :requests, only: [:create, :destroy]
   end
 
+  resources :formats, only: [:index, :show]
+
+  resources :icons, only: [:index, :show, :new, :create]
+
+  resources :picks, only: [:index, :show, :create]
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

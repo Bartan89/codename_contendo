@@ -8,7 +8,7 @@ class Video < ApplicationRecord
   belongs_to :shepherd, class_name: "User", optional: true
 
 
-    validate :url_must_start_with
+  validate :url_must_start_with
 
   def url_must_start_with
     if !video_path.starts_with? 'https://www.youtube.com/embed/'

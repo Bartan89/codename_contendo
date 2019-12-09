@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_03_154048) do
+ActiveRecord::Schema.define(version: 2019_12_06_101004) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2019_12_03_154048) do
     t.bigint "format_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
     t.index ["format_id"], name: "index_icons_on_format_id"
   end
 
@@ -56,6 +57,14 @@ ActiveRecord::Schema.define(version: 2019_12_03_154048) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["translation_id"], name: "index_notifications_on_translation_id"
+  end
+
+  create_table "picks", force: :cascade do |t|
+    t.string "icon"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_picks_on_user_id"
   end
 
   create_table "requests", force: :cascade do |t|
@@ -116,6 +125,8 @@ ActiveRecord::Schema.define(version: 2019_12_03_154048) do
     t.string "name"
     t.bigint "shepherd_id"
     t.integer "engagement", default: 0
+    t.text "description"
+    t.boolean "campaign", default: false
     t.index ["shepherd_id"], name: "index_videos_on_shepherd_id"
     t.index ["user_id"], name: "index_videos_on_user_id"
   end
@@ -133,6 +144,7 @@ ActiveRecord::Schema.define(version: 2019_12_03_154048) do
   add_foreign_key "icons", "formats"
   add_foreign_key "lines", "translations"
   add_foreign_key "notifications", "translations"
+  add_foreign_key "picks", "users"
   add_foreign_key "requests", "translations"
   add_foreign_key "requests", "users"
   add_foreign_key "scenes", "formats"

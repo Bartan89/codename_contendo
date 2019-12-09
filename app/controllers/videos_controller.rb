@@ -81,6 +81,6 @@ end
 
 
   def video_params
-    params.require(:video).permit(:video_path, :name)
+    params.require(:video).permit(:video_path, :name, :description)
   end
 end

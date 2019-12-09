@@ -55,7 +55,7 @@ end
     @translation.json = LinesToJsonService.to_json(@translation.lines.order('created_at ASC'))
 
     if @translation.save
-      redirect_to inbox_path
+      redirect_to video_path(@translation.video_id, anchor: "example")
     else
       render :edit
     end
@@ -80,7 +80,8 @@ end
     authorize @translation
     @translation.done = true
     @translation.save
-    redirect_to video_path(@translation.video)
+    redirect_to video_path(@translation.video), notice: "Publish succesful. You can now request your translation."
+
   end
 
   def unpublish

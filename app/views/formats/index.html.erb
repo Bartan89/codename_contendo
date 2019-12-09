@@ -8,17 +8,32 @@
 </style>
 
 
+
+
 <div class="row ml-5 mt-5">
-  <% @icons.each do |icon|%>
-      <div class="ml-5 mr-3 mt-2 shadow" style="width: 16rem;">
+      <div class="ml-5 mr-3 mt-2 shadow" style="width: 18rem;">
         <div class="card-body">
-            <div id="bm" data-icon="<%=icon.json%>"></div>
-          <h5 class="card-title">Card title</h5>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <div id="bm" class="bm-element" data-icon="<%=@icons.first.json%>"></div>
+          <h5 class="card-title">Animated icons</h5>
+  <%= link_to "Find your favourites", icons_path, class: "btn btn-secondary" %>
+          <br>
+          <small>Stumble upon and add to a project.</small>
+            <br>
+          <small>All <span class="badge badge-primary"><%= @icons.count*37 %></span> of them</small>
         </div>
       </div>
-    <% end %>
+
+
+
+    <% @formats.each do |format| %>
+      <div class="ml-5 mr-3 mt-2 shadow" style="width: 16rem;">
+        <div class="card-body">
+          <div id="bm" data-icon="<%=@icons.first.json%>"></div>
+          <h5 class="card-title">Carsousel format</h5>
+          <%= link_to "Make it your own", format_path(format), class: "btn btn-secondary" %>
+          <br>
+          <small>You decide on lenght, color, animations and titles.</small>
+        </div>
+      </div>
     </div>
-
-
-
+  <% end %>

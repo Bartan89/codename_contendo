@@ -1,0 +1,10 @@
+  <div class="p-2 mb-2 bg-primary text-white">   ⓘ Translations can be linked after adding the video</div>
+<div class="container">
+  <h1>Add a new video:</h1>
+
+  <%= simple_form_for [@icon] do |f| %>
+    <%= f.input :name %>
+    <%= f.input :json %>
+    <%= f.submit "add video", class: "btn btn-primary" %>
+  <% end %>
+</div>

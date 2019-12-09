@@ -2,7 +2,13 @@ class FormatsController < ApplicationController
 
   def index
     @icons = Icon.all
-    @formats = "something"
+    @formats = Format.all
     @formats = policy_scope(Format)
   end
+
+  def show
+    @format = Format.find(params[:id])
+    authorize @format
+  end
+
 end

@@ -1,14 +1,39 @@
 import "bootstrap";
 import lottie from 'lottie-web'
-import data from './data.json'
 
-const bmElement = document.getElementById('bm');
-const json = bmElement.dataset.icon
-console.log({json})
-lottie.loadAnimation({
-  container: document.getElementById('bm'), // the dom element that will contain the animation
-  renderer: 'svg/canvas/html',
+
+var bmElements = document.querySelectorAll('.bm-element');
+
+
+bmElements.forEach(element => {
+    console.log(element.dataset.icon)
+  lottie.loadAnimation({
+  container: element, // the dom element that will contain the animation
+  renderer: 'svg',
+  autoplay: true, // Optional
   loop: true,
-  autoplay: true,
-  animationData: JSON.parse(json) // the path to the animation json
+  animationData: JSON.parse(element.dataset.icon) // the path to the animation json
+  })
 });
+
+
+
+// var slider = document.getElementById("myRange");
+// var output = document.getElementById("demo");
+// output.innerHTML = slider.value;
+
+// slider.oninput = function() {
+//   output.innerHTML = this.value;
+// }
+
+
+document.getElementById("btnCopy").addEventListener("click", function(){
+       var copyText = document.getElementById("myText");
+       copyText.select();
+       document.execCommand("Copy");
+       document.getElementById("copy-prompt").classList.remove('d-none')
+       var paragraph = document.getElementById("btn-copy");
+       var text = document.createTextNode(" again");
+
+      paragraph.appendChild(text);
+     });

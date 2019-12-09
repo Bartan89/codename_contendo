@@ -6,6 +6,6 @@ class DashboardsController < ApplicationController
     @translations_with_requests = @videos.map do |video|
       video.translations.joins(:requests)
     end.flatten.uniq
-
   end
+
 end

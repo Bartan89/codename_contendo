@@ -6,6 +6,9 @@
     <%= f.input :name %>
     <%= f.input :video_path %>
     <p class="text-muted">for now you can only provide a youtube embedded url</p>
+    <%= f.input :description, value: "blabla"%>
+
+    <%=f.input :campaign?, as: :boolean, checked_value: true, unchecked_value: false %>
     <%= f.submit "add video", class: "btn btn-primary" %>
   <% end %>
 </div>

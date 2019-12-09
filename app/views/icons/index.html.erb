@@ -1,0 +1,55 @@
+
+<style>
+  #bm {
+    height: 200px;
+    width: 200px;
+    position: relative;
+  }
+</style>
+
+
+<div class="float-left">
+  <div class="ml-5 mr-3 mt-2 shadow" style="width: 16rem;">
+    <div class="card-body">
+      <h1 class="lead">Your picks:</h1>
+      <% @picks.each do |pick| %>
+      <i class="far fa-trash-alt text-danger"></i>
+      <p>pick.icon</p>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="row pl-5 pt-2">
+    <p class="lead">categories:</p>
+    <p class="pl-2 lead">cardiovascular</p>
+</div>
+    <%=link_to "Add icon", new_icon_path, class: "btn btn-primary" %>
+
+
+
+<br>
+<br>
+<br>
+<br>
+
+<div class="row ml-5 mt-5 datafetch" >
+  <% @icons.each do |icon|%>
+      <div class="ml-5 mr-3 mt-2 shadow" style="width: 16rem;">
+        <div class="card-body">
+          <div id="bm" class="bm-element" data-icon="<%=icon.json%>"></div>
+          <h5 class="card-title">name of icon</h5>
+          <a href="#" class="btn-sm btn-primary">More info</a>
+          <%= link_to "+", picks_path(icon), class: "btn-sm btn-primary", method: :POST %>
+
+
+
+        </div>
+      </div>
+    <% end %>
+    </div>
+
+
+
+
+

@@ -7,5 +7,5 @@ class User < ApplicationRecord
   has_many :videos
   has_many :translations
   has_many :videos_as_shepherd, class_name: 'Video', foreign_key: :shepherd_id
-
+  has_many :picks
 end
