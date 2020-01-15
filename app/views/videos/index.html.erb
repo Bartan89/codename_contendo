@@ -54,8 +54,10 @@
           <%= link_to video_path(video) do %>
             <h5 ><%="#{video.name}"%></h5>
             <% end %>
-             <iframe class="border" src="<%=video.video_path%>"
-              allowfullscreen="" width="420" height="235"></iframe>
+
+      <div class="embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" src="<%=video.video_path%>" allowfullscreen> </iframe>
+      </div>
 
         <% if !video.translations.first %>
           <%= link_to "Awaiting transcript...", video_path(video), class: "btn btn-outline-secondary btn-sm"%>

@@ -13,8 +13,15 @@
     <div class="card-body">
       <h1 class="lead">Your picks:</h1>
       <% @picks.each do |pick| %>
-      <i class="far fa-trash-alt text-danger"></i>
-      <p>pick.icon</p>
+      <li pick_id="<%= pick.id %>">
+        <div class=""></div>
+        <i class="far fa-trash-alt text-danger"></i>
+        <p class="iconToggler"><%= pick.icon.name %></p>
+        <div class="d-none">
+        <div id="bm" class="bm-element" data-icon="<%=pick.icon.json%>"></div>
+        </div>
+        <%= link_to "delete", pick, class: "btn-sm btn-primary", method: :delete, remote: true  %>
+      </li>
       <% end %>
     </div>
   </div>
@@ -38,12 +45,10 @@
       <div class="ml-5 mr-3 mt-2 shadow" style="width: 16rem;">
         <div class="card-body">
           <div id="bm" class="bm-element" data-icon="<%=icon.json%>"></div>
-          <h5 class="card-title">name of icon</h5>
+          <h5 class="card-title"><%= icon.name %></h5>
           <a href="#" class="btn-sm btn-primary">More info</a>
           <%= link_to "+", picks_path(icon), class: "btn-sm btn-primary", method: :POST %>
-
-
-
+          <%= link_to "show", icon, class: "btn-sm btn-primary", method: :get %>
         </div>
       </div>
     <% end %>

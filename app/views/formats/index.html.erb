@@ -9,6 +9,29 @@
 
 
 
+
+
+
+<div class="float-left">
+  <div class="ml-5 mr-3 mt-2 shadow" style="width: 16rem;">
+    <div class="card-body">
+      <h1 class="lead">Your picks:</h1>
+      <% @picks.each do |pick| %>
+      <li pick_id="<%= pick.id %>">
+        <div class=""></div>
+        <i class="far fa-trash-alt text-danger"></i>
+        <p class="iconToggler"><%= pick.icon.name %></p>
+        <div class="d-none">
+        <div id="bm" class="bm-element" data-icon="<%=pick.icon.json%>"></div>
+        </div>
+        <%= link_to "delete", pick, class: "btn-sm btn-primary", method: :delete, remote: true  %>
+      </li>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
 <% if @icons.count > 0 %>
 <div class="row ml-5 mt-5">
       <div class="ml-5 mr-3 mt-2 shadow" style="width: 18rem;">

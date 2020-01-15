@@ -1,11 +1,15 @@
 
-
+<div class="container">
+  <a href="javascript:history.back()">< Back to video</a>
+</div>
 
 <div class="container">
   <div class="row">
+      <div class="ml-5">
   <div class="view_video">
     <h2><%="#{@translation.video.name}"%></h2>
       <iframe src="<%=@translation.video[:video_path]%>"width="660" height="375"></iframe>
+      </div>
     </div>
 </div>
 

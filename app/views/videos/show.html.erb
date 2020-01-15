@@ -9,16 +9,25 @@
 </style>
 
 <!--VIDEO-->
-<div class="container mt-5">
-  <div class="d-flex flex-row bd-highlight mb-5">
-    <div class="shadow ml-5 p-3  bd-highlight">
+<div class="container">
+<div class="row">
+
+    <div class="col-lg-9 col-md-12 shadow-sm p-3  bg-light">
+
       <h2><%="#{@video.name}"%></h2>
-        <iframe src="<%=@video.video_path%>"width="660" height="375"></iframe>
+      <div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="<%=@video.video_path%>" allowfullscreen> </iframe>
+</div>
+
           <% @video.tags.each do |tag|  %>
             <span class="badge badge-secondary badge-outlined"><%= tag.tag  %></span>
         <% end %>
-    </div>
-  <div class="shadow ml-5 mr-5 p-2 bd-highlight">
+        </div>
+
+
+<!--DESCRIPTION-->
+
+  <div class="col-lg-3 col-md-12  shadow-sm p-2 bg-light">
     <h1>Description:</h1>
       <% if !@video.description.blank? %>
         <p><%="#{@video.description}"%></p>
@@ -30,26 +39,31 @@
         <p class="pr-2"> Part of campaign? </p>
         <p><%="#{@video.campaign == true ? "Yes": "No"}"%></p>
       </div>
-        <div>
+        <div class="col-lg-12 col-6 bg-light">
       <h5>'Globality' score:</h5>
       <% if  @video.description.blank?%>
       <small>Description missing</small>
-      <span id="bm-element-no-loop" class="bm-element-no-loop" data-icon="<%=@icons.where(:name => 'hico-loading-2')[0].json%>"></span>
+      <span id="bm-element-no-loop" class="bm-element-no-loop" data-icon="<%=@icons.where(:name => 'hico-loading-1')[0].json%>"></span>
+      <small>Without a description the video is less likely to be found</small>
       <% elsif @video.translations.blank? %>
       <small>Transcript missing</small>
       <span id="bm-element-no-loop" class="bm-element-no-loop" data-icon="<%=@icons.where(:name => 'hico-loading-2')[0].json%>"></span>
+      <small>Transcripts provide the base language for others to translate.</small>
       <% elsif @video.shepherd.blank? %>
       <small>No Shepherd yet</small>
-      <span id="bm-element-no-loop" class="bm-element-no-loop" data-icon="<%=@icons.where(:name => 'hico-loading-5')[0].json%>"></span>
+      <span id="bm-element-no-loop" class="bm-element-no-loop" data-icon="<%=@icons.where(:name => 'hico-loading-3')[0].json%>"></span>
+      <small>When commiting to the role as 'Shepherd' any translation on this piece will be send to you</small>
       <% elsif @video.tags.blank? %>
       <small>Tags are missing</small>
-      <span id="bm-element-no-loop" class="bm-element-no-loop" data-icon="<%=@icons.where(:name => 'hico-loading-5')[0].json%>"></span>
+      <span id="bm-element-no-loop" class="bm-element-no-loop" data-icon="<%=@icons.where(:name => 'hico-loading-4')[0].json%>"></span>
+      <small>Without tags the video is less likely to be found</small>
       <% else %>
-       <small>Content has all elements</small>
+       <small>Content includes all elements</small>
       <span id="bm-element-no-loop" class="bm-element-no-loop" data-icon="<%=@icons.where(:name => 'hico-loading-5')[0].json%>"></span>
       <% end %>
     </div>
   </div>
+</div>
 </div>
 
 <!--PROVIDE TRANSLATION & REQUEST/SHEPARD-->
@@ -198,8 +212,6 @@
     <% end %>
   </div>
 </div>
-
-
 
 
 

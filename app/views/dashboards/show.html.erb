@@ -1,48 +1,139 @@
-<div class="container shadow p-3">
-  <h1>Your shepherded videos</h1>
-    <table class="table table-borderless table-hover">
-      <thead>
-        <tr>
+<br>
+
+
+
+
+    <h4>Your requests for videos where you provided a translation:</h4>
+      <table class="table table-hover">
+        <thead>
+         <tr>
           <th scope="col">#</th>
           <th scope="col">Name</th>
+          <th scope="col">Language</th>
+          <th scope="col">Request handler</th>
+          <th scope="col">Status</th>
           <th scope="col"></th>
-          <th scope="col"></th>
-        </tr>
+          <th scope="col">Revoke</th>
+         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </table>
+        <% @requests.each_with_index do |request,index| %>
+          <% if request.completed == false %>
+              <tr>
+                <th scope="row"><%= index+1 %></th>
+                <td><%= link_to "#{request.translation.video.name}", video_path(request.translation.video.id), method: :get, class: 'btn-sm btn-light shadow-sm'%></td>
+                <td><%= request.translation.language%></td>
+                <td><%= request.translation.video.shepherd == nil ? "contact Administrator" : request.translation.video.shepherd.email  %></td>
+                <td>pending</td>
+                <td id="bm-element" class="bm-element" data-icon="<%=@icons.where(:name => 'hico-arrow_2')[0].json%>"></td>
+                <td><%= link_to "revoke", translation_request_path(request.translation.id, request.id),
+          class: "btn-sm btn-success  text-white",
+          method: :delete,
+          data: { confirm: "Are you sure? This request will be revoked from the todo list of the shepherd. You can always re-request a translation" } %></p></td>
+
+
+              </tr>
+            <% end %>
+          <% end %>
+    </tbody>
+  </table>
+</div>
+<br>
+<div class="container">
+  <h4>Your videos</h4>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Shepherd</th>
+        <th scope="col">Views</th>
+      </tr>
+    </thead>
+
+    <tbody>
+  <% @videos.each_with_index do |video,index| %>
+      <tr>
+        <th scope="row"><%= index+1 %></th>
+        <td><%= link_to "#{video.name}", video_path(video.id), method: :get, class: 'btn-sm btn-light shadow-sm'%></td>
+          <% if video.shepherd.blank? %>
+            <td><%= link_to "claim it", video_path(video.id), method: :get, class: 'btn-sm btn-light shadow-sm'%></td>
+          <% elsif video.shepherd.id == current_user.id %>
+          <td><%= link_to  "Revoke", inbox_path(video), method: :patch, class: "btn-sm btn-success  text-white"%></td>
+          <% end %>
+        <td><%= video.engagement %></td>
+      </tr>
+  <% end %>
+    </tbody>
+  </table>
 </div>
 
 
-<% if @videos != [] %>
-  <% @videos.each do |video| %>
+<br>
+<div class="container">
+  <h4>Your Jobs</h4>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Client</th>
+        <th scope="col">Language</th>
+        <th scope="col">Status  </th>
+      </tr>
+    </thead>
+
+    <tbody>
+  <% @jobs.each_with_index do |job,index| %>
+      <tr>
+        <th scope="row"><%= index+1 %></th>
+        <td><%= link_to "#{job.video.name}", video_path(job.video.id), method: :get, class: 'btn-sm btn-light shadow-sm'%></td>
+      </tr>
+
+    </tbody>
+  </table>
+            <div class="text-secondary form-group">
+    <label for="exampleFormControlTextarea1">Example textarea</label>
+    <textarea class="bn-2 bg-dark text-secondary form-control" id="myText" rows="7"><%= job.json %></textarea>
+    <div id="copy-prompt"class="lead d-none text-white text-center bg-success">
+      <small>JSON coppied</small>
+    <small class="fas fa-check text-white"></small>
+
+    </div>
+
+  <% end %>
+</div>
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 ml-3 mr-2 mb-1 shadow-sm bg-white">
+      <h4>Your videos</h4>
+      <span>Nordic video explainer</span>
+
+    </div>
+    <div class="col-md-12 ml-3 mr-2 mb-1 shadow-sm bg-white">
+      <h4>Your Translations</h4>
+    </div>
+    <div class="col-md-12 ml-3 mr-2 mb-1 shadow-sm bg-white">
+      <h4>Your Icons</h4>
+    </div>
+    <div class="col-md-12 ml-3 mr-2 mb-1 shadow-sm bg-white">
+      <h4>Your Jobs</h4>
+    </div>
+  </div>
+</div>
+
+<% if @jobs != [] %>
+  <% @jobs.each do |video| %>
         <div class="lead row pt-2 ml-1">
       <% if Time.now.utc - video.created_at < 0.114022 %>
         <p class="lead pl-1 pr-1 shadow-sm text-secondary mr-2">ⓘ Just added: </p>
       <% end %>
-          <p class="pr-2"><%= "Name: #{video.name}" %></p>
           <p>Go to Video: <strong><%= link_to "Click here", video_path(video), class: "mr-2 btn btn-primary mr-2 ml-2"%></strong></p>
           <p> add tags: <strong><%= link_to "Click here", dashboard_tag_path(params[:id] ,video), class: "btn btn-primary mr-2 ml-2"%></strong></p>
-          <p><%= link_to  "Revoke support", inbox_path(video), method: :patch, class: "btn btn-success  text-white"%></p>
+          <p></p>
       </div>
   <% end %>
 <% else %>
@@ -59,7 +150,7 @@
 
 <div class="container">
 
-<% @translations_with_requests.each do |translation| %>
+<% @jobs.each do |translation| %>
   <div class="container">
     <h4><%="#{translation.video.name}"%></h4>
       <iframe src="<%=translation.video.video_path%>"width="200" height="113"></iframe>

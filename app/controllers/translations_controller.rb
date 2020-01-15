@@ -39,6 +39,7 @@ end
   end
 
   def edit
+      @icons = Icon.all
       @translation = Translation.find(params[:id])
       authorize @translation
   end
@@ -55,7 +56,8 @@ end
     @translation.json = LinesToJsonService.to_json(@translation.lines.order('created_at ASC'))
 
     if @translation.save
-      redirect_to video_path(@translation.video_id, anchor: "example")
+      redirect_to edit_translation_path(params[:id])
+      flash[:notice] = "saved succesfully"
     else
       render :edit
     end
@@ -80,7 +82,11 @@ end
     authorize @translation
     @translation.done = true
     @translation.save
-    redirect_to video_path(@translation.video), notice: "Publish succesful. You can now request your translation."
+    if Video.find(Translation.find(params[:id]).video_id).shepherd_id == nil
+      redirect_to video_path(@translation.video), notice: "Publish succesful. Since there is no shepherd you can't request the video yet."
+    else
+      redirect_to video_path(@translation.video), notice: "Publish succesful. You can now request your translated video."
+    end
 
   end
 

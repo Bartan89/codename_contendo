@@ -1,6 +1,6 @@
 
 <div class="navbar">
-  <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
+  <div class="pl-5 navbar navbar-expand-sm navbar-light navbar-lewagon">
     <%= link_to "videos", class: "navbar-brand" do %>
       <%= image_tag "logo.png" %>
       <% end %>
@@ -10,13 +10,13 @@
     </button>
 
 
-    <div class="lead collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="pl-5 lead collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <% if user_signed_in? %>
           <li class="nav-item">
             <li class="nav-item" id="online">⬤</li>
             <% user = current_user.email %>
-            <%= link_to "#{user} |", root_path, class: "nav-link" %>
+            <%= link_to "#{user}", dashboard_path(current_user.id), class: "nav-link" %>
           </li>
           <li class="nav-item active">
 
@@ -28,28 +28,24 @@
             <%= link_to "Formats", formats_path, class: "nav-link" %>
           </li>
           <li class="nav-item active">
-            <%= link_to "Log out", destroy_user_session_path, method: :delete,  class: "nav-link"%>
+            <%= link_to "Briefings", briefings_path, class: "nav-link" %>
           </li>
-           <% if current_user.videos_as_shepherd.count != 0 %>
-           <li class="nav-item-end">
-            <%= link_to "shepherd dashboard",  dashboard_path(current_user.id), class: "btn btn-outline-secondary" %>
+          <li class="nav-item active">
+            <%= link_to "Dashboard", dashboard_path(current_user.id), class: "nav-link", method: :get %>
           </li>
-           <li class="nav-item-end">
-            <%= link_to "My videos / translations", inbox_path(current_user.id), class: "btn btn-outline-secondary" %>
-          </li>
-          <% elsif current_user.videos.count != 0 && current_user.translations.count == 0 %>
-           <li class="nav-item-end">
-            <%= link_to "My videos", inbox_path(current_user.id), class: "btn btn-outline-secondary" %>
-          </li>
-          <% elsif current_user.videos.count != 0 || current_user.translations.count != 0 %>
-           <li class="nav-item-end">
-            <%= link_to "My videos / translations", inbox_path(current_user.id), class: "btn btn-outline-secondary" %>
+          <li class="nav-item active">
+            <%= link_to "Sign-out", destroy_user_session_path, method: :delete,  class: "nav-link"%>
           </li>
 
 
-          <% end %>
-          <li class="nav-item-end">
-            <%= link_to "add a video", new_video_path, class: "btn btn-outline-secondary"%>
+
+
+          <li class="pt-2 nav-item">
+            <%= link_to new_video_path do %>
+            <i class="fas fa-cloud-upload-alt text-secondary pl-2"></i>
+            <span>Add video</span>
+            <% end  %>
+
           </li>
         <% else %>
             <li class="nav-item" id="offline">⬤</li>

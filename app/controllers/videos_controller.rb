@@ -74,14 +74,26 @@ def revoke
   redirect_to video_path(@video)
 end
 
-
-
-
   private
-
-
 
   def video_params
     params.require(:video).permit(:video_path, :name, :description)
   end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

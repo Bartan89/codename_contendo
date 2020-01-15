@@ -1,4 +1,5 @@
 class Icon < ApplicationRecord
+  has_many :picks
 
    validate :json_string_must_start_with
    validate :json_string_must_end_with

@@ -6,6 +6,11 @@ class IconsController < ApplicationController
     @picks = Pick.all
   end
 
+  def show
+    @icon = Icon.find(params[:id])
+    authorize @icon
+  end
+
 
   def new
     @icon = Icon.new
@@ -23,9 +28,6 @@ class IconsController < ApplicationController
       render :new
     end
   end
-
-
-
 
   private
 

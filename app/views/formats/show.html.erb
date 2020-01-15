@@ -1,31 +1,44 @@
-<style>
-#myDIV {
-  width: 10%;
-  padding: 50px 0;
-  text-align: center;
-  background-color: lightblue;
-  margin-top: 20px;
-}
-</style>
 
 
-<div class="pt-4 text-center container">
-  <h1><%= @format.name  %></h1>
 
-  <h2>pick the amount of scenes:</h2>
-  <div class="text-center container pr-5 pl-5">
-    <div class="text-center container pr-5 pl-5">
-  <div class="slidecontainer">
-    <input type="range" min="1" max="6" value="3" class="custom-range" id="myRange">
-  </div>
-  </div>
+
+
+
+
+
+<div class="float-left">
+  <div class="ml-5 mr-3 mt-2 shadow" style="width: 16rem;">
+    <div class="card-body">
+      <h1 class="lead">Your picks:</h1>
+      <% @picks.each do |pick| %>
+      <li pick_id="<%= pick.id %>">
+        <div class=""></div>
+        <i class="far fa-trash-alt text-danger"></i>
+        <p class="iconToggler"><%= pick.icon.name %></p>
+        <%= link_to "delete", pick, class: "btn-sm btn-primary", method: :delete, remote: true  %>
+      </li>
+      <% end %>
+    </div>
   </div>
 </div>
-<div class="text-center pt-4">
-    <i class="fas fa-angle-right"></i>
-    <h1 class="lead btn btn-outline-secondary p-5">Scenes: <span id="demo"></span></h1>
-    <i class="fas fa-angle-double-right"></i>
-    <h1 class="lead btn btn-outline-secondary p-5">end screen <span id="demo"></span></h1>
-    <a>end</a>
-</div>
+
+
+<h2>how many scenes would you like your video to have?</h2>
+
+<%= simple_form_for @scenes do |m| %>
+    <%= m.input :content, label: "pick a primary color for the video", collection: [['0', 'Bayer Green'], ['1', 'Bayer Blue'], ['2', 'Bayer Purpple']], label_method: :second, value_method: :first %>
+      <% end %>
+        <input class="float-left" type="submit" name="commit" value="Update Translation" data-disable-with="Update Translation">
+
+
+
+
+
+
+
+
+
+
+
+
 
