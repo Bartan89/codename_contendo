@@ -1,53 +1,84 @@
-<br>
+<% 2.times do %>
+  <br>
+<% end %>
 
 
 
 
-    <h4>Your requests for videos where you provided a translation:</h4>
+    <div class="shadow mt-5 float-right mr-5 btn btn-light p-2 rounded">
+ <p class="lead m-3">Your community <br> score*:</p>
+  <div class="ml-2 row">
+   <h2 class= "text-secondary"><%= @stars %></h2>
+   <h2 class= "text-muted"><%= @old_stars %></h2>
+  </div>
+  <p><%= @motivational_sentence %></p>
+  </div>
+
+
+<% if @requests.blank? && @videos.blank? && @jobs.blank? %>
+  <div class="container">
+    <p>Looks like you haven't interacted much with the platform, come back to your personal dashboard once you do.</p>
+    <h4 class="far fa-smile"></h4>
+  </div>
+<% end %>
+
+<% if !@requests.blank? %>
+  <div class="container">
+    <div class="row">
+      <h4 class="p-1">Your requested videos <small class="ml-1 p-1 bg-secondary text-white">where you requested a translation</small></h4>
+    </div>
       <table class="table table-hover">
         <thead>
-         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Name</th>
-          <th scope="col">Language</th>
-          <th scope="col">Request handler</th>
-          <th scope="col">Status</th>
-          <th scope="col"></th>
-          <th scope="col">Revoke</th>
-         </tr>
-      </thead>
-      <tbody>
-        <% @requests.each_with_index do |request,index| %>
-          <% if request.completed == false %>
+           <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Language</th>
+            <th scope="col">Shepherd</th>
+            <th scope="col">Status</th>
+            <th scope="col">Revoke</th>
+           </tr>
+        </thead>
+        <tbody>
+          <% @requests.each_with_index do |request,index| %>
+            <% if request.completed == false %>
               <tr>
                 <th scope="row"><%= index+1 %></th>
-                <td><%= link_to "#{request.translation.video.name}", video_path(request.translation.video.id), method: :get, class: 'btn-sm btn-light shadow-sm'%></td>
-                <td><%= request.translation.language%></td>
-                <td><%= request.translation.video.shepherd == nil ? "contact Administrator" : request.translation.video.shepherd.email  %></td>
-                <td>pending</td>
-                <td id="bm-element" class="bm-element" data-icon="<%=@icons.where(:name => 'hico-arrow_2')[0].json%>"></td>
-                <td><%= link_to "revoke", translation_request_path(request.translation.id, request.id),
-          class: "btn-sm btn-success  text-white",
-          method: :delete,
-          data: { confirm: "Are you sure? This request will be revoked from the todo list of the shepherd. You can always re-request a translation" } %></p></td>
-
-
+                  <td><%= link_to "#{request.translation.video.name}", video_path(request.translation.video.id), method: :get, class: 'btn-sm btn-light shadow-sm'%>
+                    <% if Time.now.utc - request.created_at < 0.114022 %>
+                      <small class="btn-sm btn-secondary shadow-sm p-1 text-black"><i class="far fa-arrow-alt-circle-left"></i> recently added</i></small>
+                    <% end %>
+                  </td>
+                    <td><%= request.translation.language%></td>
+                    <td><%= request.translation.video.shepherd == nil ? "contact Administrator" : request.translation.video.shepherd.email  %></td>
+                    <td>pending</td>
+                    <td><%= link_to "revoke", translation_request_path(request.translation.id, request.id),
+                    class: "btn-sm btn-success  text-white",
+                    method: :delete,
+                    data: { confirm: "Are you sure? This request will be revoked from the todo list of the shepherd. You can always re-request a translation" } %></p></td>
               </tr>
             <% end %>
           <% end %>
-    </tbody>
-  </table>
-</div>
-<br>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>
+
+<% if !@videos.blank? %>
 <div class="container">
-  <h4>Your videos</h4>
+        <div class="row">
+        <h4 class="p-1">Your videos <small class="ml-1 p-1 bg-secondary text-white">what you uploaded</small></h4>
+      </div>
   <table class="table table-hover">
     <thead>
       <tr>
         <th scope="col">#</th>
         <th scope="col">Name</th>
         <th scope="col">Shepherd</th>
+        <th scope="col">Transcript</th>
+        <th scope="col">Add tags</th>
         <th scope="col">Views</th>
+        <th scope="col">Delete</th>
       </tr>
     </thead>
 
@@ -61,145 +92,94 @@
           <% elsif video.shepherd.id == current_user.id %>
           <td><%= link_to  "Revoke", inbox_path(video), method: :patch, class: "btn-sm btn-success  text-white"%></td>
           <% end %>
+          <td>
+              <% if !video.translations.blank? %>
+                <%=link_to "Remove transcript", translation_path(video.translations.first.id), class: 'btn-sm btn-light shadow-sm',
+                method: :delete,
+                data: { confirm: "The video will be removed. Including all user generated translations!" }%>
+                <% else %>
+                <%= link_to "Add transcript", video_path(video.id), method: :get, class: 'btn-sm btn-light shadow-sm'%></td>
+              <% end %>
+            </td>
+          <td>
+            <%= link_to "Click here", dashboard_tag_path(params[:id] ,video), class: "btn-sm btn-success  text-white"%>
+          </td>
         <td><%= video.engagement %></td>
+        <td>
+          <%=link_to "Delete", video_path(video.id), class: 'btn-sm btn-light shadow-sm',
+          method: :delete,
+          data: { confirm: "The video will be removed. Including all user generated translations!" }%>
+        </td>
       </tr>
   <% end %>
     </tbody>
   </table>
 </div>
+<% end %>
 
-
-<br>
+<% if !@jobs.blank? %>
 <div class="container">
-  <h4>Your Jobs</h4>
+  <div class="row">
+      <h4 class="p-1">Your jobs <small class="ml-1 p-1 bg-secondary text-white">On videos you shepherded</small></h4>
+    </div>
   <table class="table table-hover">
     <thead>
       <tr>
         <th scope="col">#</th>
         <th scope="col">Name</th>
-        <th scope="col">Client</th>
-        <th scope="col">Language</th>
-        <th scope="col">Status  </th>
       </tr>
     </thead>
 
-    <tbody>
   <% @jobs.each_with_index do |job,index| %>
+    <tbody>
       <tr>
-        <th scope="row"><%= index+1 %></th>
-        <td><%= link_to "#{job.video.name}", video_path(job.video.id), method: :get, class: 'btn-sm btn-light shadow-sm'%></td>
-      </tr>
+          <th scope="row"><%= index+1 %></th>
+          <td><%= link_to "#{job.video.name}", video_path(job.video.id), method: :get, class: 'btn-sm btn-light shadow-sm'%></td>
 
-    </tbody>
   </table>
-            <div class="text-secondary form-group">
-    <label for="exampleFormControlTextarea1">Example textarea</label>
-    <textarea class="bn-2 bg-dark text-secondary form-control" id="myText" rows="7"><%= job.json %></textarea>
-    <div id="copy-prompt"class="lead d-none text-white text-center bg-success">
-      <small>JSON coppied</small>
-    <small class="fas fa-check text-white"></small>
+  <table class="table table-hover">
+    <thead>
+      <th scope="col">Client(s)</th>
+      <th scope="col">Status</th>
+      <th scope="col">Language</th>
+    </thead>
 
-    </div>
-
-  <% end %>
-</div>
-
-
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-12 ml-3 mr-2 mb-1 shadow-sm bg-white">
-      <h4>Your videos</h4>
-      <span>Nordic video explainer</span>
-
-    </div>
-    <div class="col-md-12 ml-3 mr-2 mb-1 shadow-sm bg-white">
-      <h4>Your Translations</h4>
-    </div>
-    <div class="col-md-12 ml-3 mr-2 mb-1 shadow-sm bg-white">
-      <h4>Your Icons</h4>
-    </div>
-    <div class="col-md-12 ml-3 mr-2 mb-1 shadow-sm bg-white">
-      <h4>Your Jobs</h4>
-    </div>
-  </div>
-</div>
-
-<% if @jobs != [] %>
-  <% @jobs.each do |video| %>
-        <div class="lead row pt-2 ml-1">
-      <% if Time.now.utc - video.created_at < 0.114022 %>
-        <p class="lead pl-1 pr-1 shadow-sm text-secondary mr-2">ⓘ Just added: </p>
+            <% job.requests.each do |request| %>
+    <tr>
+    <td><%= request.user.email %></td>
+    <td>
+      <% time = request.created_at %>
+      <% if time < 1000000000 %>
+      <p>Just added</p>
+      <% elsif time > 2000000000 %>
+      <p>Priority</p>
+      <% elsif time > 5000000000 %>
+      <p>Took too long</p>
       <% end %>
-          <p>Go to Video: <strong><%= link_to "Click here", video_path(video), class: "mr-2 btn btn-primary mr-2 ml-2"%></strong></p>
-          <p> add tags: <strong><%= link_to "Click here", dashboard_tag_path(params[:id] ,video), class: "btn btn-primary mr-2 ml-2"%></strong></p>
-          <p></p>
-      </div>
-  <% end %>
-<% else %>
-  <div class="container ml-5">
-    <p>you currently don't have any requests</p>
-  </div>
-    <br>
-<% end %>
+
+    </td>
 
 
-  <h3> your jobs:</h3>
-</div>
-
-
-<div class="container">
-
-<% @jobs.each do |translation| %>
-  <div class="container">
-    <h4><%="#{translation.video.name}"%></h4>
-      <iframe src="<%=translation.video.video_path%>"width="200" height="113"></iframe>
-  </div>
-  <p><%= translation.language %></p>
-  </div>
-  <div class="p-3 mb-2 bg-info text-white">
-    <p>copy JSON:</p>
-
-    <div class="p-2 mb-2 bg-primary text-white">   you got a new job</div>
-<div class="bg-light">
-<div class="container">
-    <div class="text-secondary form-group">
-    <label for="exampleFormControlTextarea1">Example textarea</label>
-    <textarea class="bn-2 bg-dark text-secondary form-control" id="myText" rows="7"><%= translation.json %></textarea>
-    <div id="copy-prompt"class="lead d-none text-white text-center bg-success">
-      <small>JSON coppied</small>
-    <small class="fas fa-check text-white"></small>
-
-    </div>
-  </div>
-    <button class="mn-2 btn-sm btn-dark text-white" id="btnCopy"><i class="far fa-clipboard"></i><small id="btn-copy" class="pl-2">Copy</small></button>
-  <pre class="container text-white"><%= translation.json %></pre>
-  </div>
-  <% translation.requests.each do |request| %>
-  <div class="container">
-  <div class="row">
-    <p><%= request.user.email %></p>
-    <p><%= request.created_at %></p>
-    <p><%= link_to "done", translation_request_path(request.translation.id, request.id),
+    <td><%= request.translation.language %></td>
+    <td><%= link_to "done", translation_request_path(request.translation.id, request.id),
           class: "btn btn-outline-primary btn-sm",
           method: :delete,
-          data: { confirm: "Are you sure?" } %></p>
+          data: { confirm: "Are you sure? Did you sent the requesting party the video? If not, do that before." } %></td>
     </div>
     </div>
+  </tr>
   <% end %>
+      </tr>
+      <tr>
+        <td colspan="5">
+          <textarea class="bn-2 bg-dark text-secondary form-control" id="myText" rows="7"><%= job.json %></textarea>
+          </td>
+        </tr>
+    </tbody>
+  <% end %>
+  </table>
+</div>
 <% end %>
 
 
-<script>
-     //   document.getElementById("btnCopy").addEventListener("click", function(){
-     //   var copyText = document.getElementById("myText");
-     //   copyText.select();
-     //   document.execCommand("Copy");
-     //   document.getElementById("copy-prompt").classList.remove('d-none')
-     //   var paragraph = document.getElementById("btn-copy");
-     //   var text = document.createTextNode(" again");
-
-     //  paragraph.appendChild(text);
-     // });
-</script>
 

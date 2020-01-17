@@ -30,7 +30,7 @@ Rails.application.routes.draw do
     member do
       patch "unpublish"
     end
-    resources :requests, only: [:create, :destroy]
+    resources :requests, only: [:create, :destroy, :update]
   end
 
   resources :formats, only: [:index, :show]

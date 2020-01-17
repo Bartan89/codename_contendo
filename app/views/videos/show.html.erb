@@ -86,8 +86,7 @@
         </a>
         <% current_user.translations.where(:done => true).each do |translation| %>
           <% if Time.now.utc - translation.updated_at < 0.514022 %>
-            <div id="bm" class="bm-element" data-icon="<%=Icon.last.json%>"></div>
-            <span class="pt-2">You can request your video now</span>
+            <span class="ml-2 mr-2 pt-2"> <i class="fas fa-arrow-left"></i> You can request your video now </span>
         <% end %>
       <% end %>
 

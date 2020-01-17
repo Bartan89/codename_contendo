@@ -80,14 +80,17 @@ end
   def publish
     @translation = Translation.find(params[:id])
     authorize @translation
+    if Translation.find(params[:id]).language == nil
+      redirect_to video_path(@translation.video), notice: "Please add a translation first before you publish a translation"
+    else
     @translation.done = true
     @translation.save
-    if Video.find(Translation.find(params[:id]).video_id).shepherd_id == nil
-      redirect_to video_path(@translation.video), notice: "Publish succesful. Since there is no shepherd you can't request the video yet."
-    else
-      redirect_to video_path(@translation.video), notice: "Publish succesful. You can now request your translated video."
+      if Video.find(Translation.find(params[:id]).video_id).shepherd_id == nil
+        redirect_to video_path(@translation.video), notice: "Publish succesful. Since there is no shepherd you can't request the video yet."
+      else
+        redirect_to video_path(@translation.video), notice: "Publish succesful. You can now request your translated video."
+      end
     end
-
   end
 
   def unpublish
